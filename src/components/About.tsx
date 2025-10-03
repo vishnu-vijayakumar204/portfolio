@@ -59,10 +59,11 @@ export default function About() {
               <h3 className="text-2xl font-bold mb-4">My Story</h3>
               <div className="space-y-4 text-slate-300 leading-relaxed">
                 <p>
-                  I'm a Senior Software Engineer with over 5 years of experience
-                  building scalable web and mobile applications. Currently
-                  working at Myntra, I specialize in frontend development and
-                  have a strong foundation in full-stack technologies.
+                  I&apos;m a Senior Software Engineer with over 5 years of
+                  experience building scalable web and mobile applications.
+                  Currently working at Myntra, I specialize in frontend
+                  development and have a strong foundation in full-stack
+                  technologies.
                 </p>
                 <p>
                   My journey began at Codingmart Technologies as a Product
@@ -72,11 +73,12 @@ export default function About() {
                   user-centric design.
                 </p>
                 <p>
-                  I'm passionate about creating innovative solutions that solve
-                  real-world problems. From e-sports platforms to mental health
-                  companions, I've worked on diverse projects that impact users'
-                  lives. When I'm not coding, you'll find me traveling to new
-                  places, playing with my dog, and exploring new technologies.
+                  I&apos;m passionate about creating innovative solutions that
+                  solve real-world problems. From e-sports platforms to mental
+                  health companions, I&apos;ve worked on diverse projects that
+                  impact users&apos; lives. When I&apos;m not coding,
+                  you&apos;ll find me traveling to new places, playing with my
+                  dog, and exploring new technologies.
                 </p>
               </div>
             </div>
@@ -106,7 +108,9 @@ export default function About() {
                   <div className="text-3xl font-bold text-gradient mb-2">
                     Zara
                   </div>
-                  <div className="text-slate-400 text-sm">My Dog's Name</div>
+                  <div className="text-slate-400 text-sm">
+                    My Dog&apos;s Name
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-gradient mb-2">

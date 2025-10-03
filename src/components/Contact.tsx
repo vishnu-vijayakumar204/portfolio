@@ -42,7 +42,7 @@ export default function Contact() {
             Get In <span className="text-gradient">Touch</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            Have a project in mind or want to collaborate? Let's talk!
+            Have a project in mind or want to collaborate? Let&apos;s talk!
           </p>
         </motion.div>
 
@@ -57,8 +57,8 @@ export default function Contact() {
             <div>
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
               <p className="text-slate-400 leading-relaxed mb-8">
-                I'm always open to discussing new projects, creative ideas, or
-                opportunities to be part of your visions. Feel free to reach
+                I&apos;m always open to discussing new projects, creative ideas,
+                or opportunities to be part of your visions. Feel free to reach
                 out!
               </p>
             </div>

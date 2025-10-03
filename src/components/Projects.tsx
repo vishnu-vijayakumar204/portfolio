@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 const projects = [
   {
@@ -82,9 +83,11 @@ export default function Projects() {
             >
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden bg-slate-800">
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
+                  width={400}
+                  height={192}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>

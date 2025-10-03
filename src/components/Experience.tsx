@@ -11,7 +11,7 @@ const experiences = [
     company: "Myntra",
     period: "Apr 2023 - Present",
     description:
-      "Frontend developer in the merchandising team, responsible for developing and maintaining the home page and SIS (Search & Item Selection) pages across Myntra's app, mobile web, and internal applications that power these customer-facing pages.",
+      "Frontend developer in the merchandising team, responsible for developing and maintaining the home page and SIS (Search & Item Selection) pages across Myntra&apos;s app, mobile web, and internal applications that power these customer-facing pages.",
     achievements: [
       "Designed and implemented Federator UI - a real-time configuration system for dynamic content across app pages (home, SIS, PLP, PDP) with advanced targeting capabilities",
       "Built Algorithmic Store for personalized user experience, reducing page deployment time from 1 month to 2 days",
@@ -61,7 +61,7 @@ export default function Experience() {
             Work <span className="text-gradient">Experience</span>
           </h2>
           <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            My professional journey and the impact I've made
+            My professional journey and the impact I&apos;ve made
           </p>
         </motion.div>
 
