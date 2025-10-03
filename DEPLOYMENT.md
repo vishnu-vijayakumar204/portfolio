@@ -112,7 +112,7 @@ No manual work needed!
 
 ### Paid Domain ($10-15/year):
 
-Buy from: Namecheap, GoDaddy, Google Domains
+Buy from: Namecheap, GoDaddy, Google Domains 
 
 ### Adding Custom Domain to Vercel:
 
