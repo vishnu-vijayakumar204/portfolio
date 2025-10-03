@@ -114,7 +114,7 @@ No manual work needed!
 
 Buy from: Namecheap, GoDaddy, Google Domains 
 
-### Adding Custom Domain to Vercel:
+### Adding Custom Domain to Vercel: 
 
 1. In Vercel dashboard, go to your project
 2. Click "Settings" → "Domains"
