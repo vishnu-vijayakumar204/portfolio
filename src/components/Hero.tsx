@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, useScroll } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 
 const ROLES = [
@@ -151,7 +151,17 @@ function ParticleField() {
 
 export default function Hero() {
   const role = useTypewriter(ROLES);
+  const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const rawY = useTransform(scrollYProgress, [0, 1], [0, -140]);
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const contentY = useSpring(rawY, { stiffness: 60, damping: 20 });
+
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const rotateX = useTransform(mouseY, [-200, 200], [6, -6]);
@@ -174,6 +184,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
+      ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-mt-0"
       style={{ backgroundColor: "#0a0a0f" }}
     >
@@ -220,7 +231,8 @@ export default function Hero() {
 
       <ParticleField />
 
-      <div
+      <motion.div
+        style={{ y: contentY, opacity: rawOpacity }}
         className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -290,7 +302,7 @@ export default function Hero() {
             transition={{ delay: 0.55, duration: 0.5 }}
             className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto mb-9 leading-relaxed"
           >
-            5+ years building high-performance web &amp; mobile products at scale.
+            6+ years building high-performance web &amp; mobile products at scale.
             Currently Technical Lead at Myntra, shipping for millions.
           </motion.p>
 
@@ -376,7 +388,7 @@ export default function Hero() {
             <ChevronDown size={18} />
           </motion.div>
         </motion.a>
-      </div>
+      </motion.div>
     </section>
   );
 }

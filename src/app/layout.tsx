@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Vishnu Vijayakumar",
   },
   description:
-    "Technical Lead at Myntra with 5+ years building high-performance web & mobile products at scale. React, React Native, Next.js specialist. Available for freelance projects in India.",
+    "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale. React, React Native, Next.js specialist. Available for freelance projects in India.",
   keywords: [
     "React developer Bangalore",
     "React Native freelancer India",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
     description:
-      "Technical Lead at Myntra with 5+ years building high-performance web & mobile products at scale.",
+      "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale.",
     type: "website",
     url: BASE_URL,
     images: [
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
     description:
-      "Technical Lead at Myntra with 5+ years building high-performance web & mobile products at scale.",
+      "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale.",
     images: ["/og-image.png"],
   },
 };

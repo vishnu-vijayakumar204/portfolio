@@ -39,10 +39,10 @@ export default function About() {
       <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <motion.div
-          custom={0}
-          variants={fadeUp}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          initial={{ opacity: 0, y: 40, rotateX: 18 }}
+          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ transformPerspective: 800 }}
           className="text-center mb-14"
         >
           <h2
@@ -68,6 +68,13 @@ export default function About() {
           variants={fadeUp}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
+          whileHover={{
+            scale: 1.01,
+            rotateX: -2,
+            rotateY: 2,
+            transition: { type: "spring", stiffness: 200, damping: 20 },
+          }}
+          style={{ transformPerspective: 1200 }}
           className="mb-10"
         >
           <div
