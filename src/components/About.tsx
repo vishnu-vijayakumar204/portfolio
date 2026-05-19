@@ -1,154 +1,218 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Code2, Rocket, Users } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 
-const highlights = [
-  {
-    icon: Code2,
-    title: "Full-Stack Expertise",
-    description:
-      "Proficient in React, React Native, Node.js, and modern web technologies",
-  },
-  {
-    icon: Rocket,
-    title: "Innovation Focus",
-    description:
-      "Building cutting-edge solutions from e-sports platforms to AI companions",
-  },
-  {
-    icon: Users,
-    title: "User-Centric Design",
-    description:
-      "Creating intuitive experiences that solve real-world problems",
-  },
+const STATS = [
+  { target: 5, suffix: "+", label: "Years Experience" },
+  { target: 15, suffix: "+", label: "Projects Shipped" },
+  { target: 3, suffix: "", label: "Products at Scale" },
+  { target: 10, suffix: "K+", label: "Coding Hours" },
 ];
+
+function CountUp({
+  target,
+  suffix,
+  inView,
+}: {
+  target: number;
+  suffix: string;
+  inView: boolean;
+}) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    let current = 0;
+    const duration = 1400;
+    const intervalMs = Math.ceil(duration / target);
+    const timer = setInterval(() => {
+      current += 1;
+      setCount(current);
+      if (current >= target) clearInterval(timer);
+    }, intervalMs);
+    return () => clearInterval(timer);
+  }, [inView, target]);
+
+  return (
+    <>
+      {count}
+      {suffix}
+    </>
+  );
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.12 },
+  }),
+};
 
 export default function About() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" className="py-32 px-6" ref={ref}>
-      <div className="container mx-auto max-w-6xl">
+    <section
+      id="about"
+      ref={ref}
+      className="relative py-28 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      style={{ backgroundColor: "#0a0a0f" }}
+    >
+      {/* Subtle section separator glow */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
+        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+      />
+
+      <div className="max-w-6xl mx-auto">
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          custom={0}
+          variants={fadeUp}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            About <span className="text-gradient">Me</span>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            About{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+            >
+              Me
+            </span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            Senior Software Engineer passionate about building innovative
-            solutions that make a real impact
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Technical Lead by day, product builder by night.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
           {/* Bio */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            custom={1}
+            variants={fadeUp}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
           >
-            <div className="glass rounded-3xl p-8">
-              <h3 className="text-2xl font-bold mb-4">My Story</h3>
-              <div className="space-y-4 text-slate-300 leading-relaxed">
+            <div
+              className="rounded-2xl p-8 h-full"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.07)",
+              }}
+            >
+              <h3
+                className="text-xl font-bold mb-5"
+                style={{ fontFamily: "'Syne', sans-serif", color: "#a5b4fc" }}
+              >
+                My Story
+              </h3>
+              <div className="space-y-4 text-slate-300 leading-relaxed text-[15px]">
                 <p>
-                  I&apos;m a Senior Software Engineer with over 5 years of
-                  experience building scalable web and mobile applications.
-                  Currently working at Myntra, I specialize in frontend
-                  development and have a strong foundation in full-stack
-                  technologies.
+                  I&apos;m a <strong className="text-white">Technical Lead at Myntra</strong>,
+                  recently promoted from Senior Software Engineer — building features used by
+                  millions of fashion shoppers across India. My work spans hyperlocal delivery
+                  platforms, real-time config systems, and FCP/LCP performance engineering.
                 </p>
                 <p>
-                  My journey began at Codingmart Technologies as a Product
-                  Engineer, where I architected backend systems and developed
-                  reusable React components. This experience taught me the
-                  importance of clean code, scalable architecture, and
-                  user-centric design.
+                  Before Myntra, I spent nearly four years at{" "}
+                  <strong className="text-white">Codingmart Technologies</strong> as a Product
+                  Engineer, where I architected backends, set up CI/CD pipelines, and integrated
+                  payment gateways for early-stage startups.
                 </p>
                 <p>
-                  I&apos;m passionate about creating innovative solutions that
-                  solve real-world problems. From e-sports platforms to mental
-                  health companions, I&apos;ve worked on diverse projects that
-                  impact users&apos; lives. When I&apos;m not coding,
-                  you&apos;ll find me traveling to new places, playing with my
-                  dog, and exploring new technologies.
+                  Outside of my day job, I run side projects under{" "}
+                  <strong className="text-white">Deviza Labs</strong> — including an AI-powered
+                  visa planner and an LLM-based expense tracker. I also take on freelance work
+                  for clients who need high-performance web &amp; mobile apps.
+                </p>
+                <p>
+                  Stack: <span className="text-indigo-400">React · React Native · Next.js · Node.js · GoLang · MongoDB · SQL</span>
                 </p>
               </div>
             </div>
           </motion.div>
 
-          {/* Fun Facts */}
+          {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-6"
+            custom={2}
+            variants={fadeUp}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            className="grid grid-cols-2 gap-5"
           >
-            <div className="glass rounded-3xl p-8">
-              <h3 className="text-2xl font-bold mb-6 text-center">
-                Fun Facts About Me
-              </h3>
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gradient mb-2">
-                    Offbeat
-                  </div>
-                  <div className="text-slate-400 text-sm">
-                    Favorite Travel Destinations
-                  </div>
+            {STATS.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl p-7 text-center"
+                style={{
+                  background: "rgba(99,102,241,0.06)",
+                  border: "1px solid rgba(99,102,241,0.18)",
+                }}
+              >
+                <div
+                  className="text-4xl font-extrabold mb-2 bg-clip-text text-transparent"
+                  style={{
+                    fontFamily: "'Syne', sans-serif",
+                    backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)",
+                  }}
+                >
+                  <CountUp target={stat.target} suffix={stat.suffix} inView={inView} />
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gradient mb-2">
-                    Zara
-                  </div>
-                  <div className="text-slate-400 text-sm">
-                    My Dog&apos;s Name
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gradient mb-2">
-                    10K+
-                  </div>
-                  <div className="text-slate-400 text-sm">Coding Hours</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-gradient mb-2">
-                    React
-                  </div>
-                  <div className="text-slate-400 text-sm">
-                    Favorite Framework
-                  </div>
-                </div>
+                <div className="text-slate-400 text-sm leading-snug">{stat.label}</div>
               </div>
-              <p className="text-slate-500 text-sm text-center mt-4 italic">
-                * These are my personal interests outside of work
-              </p>
-            </div>
+            ))}
           </motion.div>
         </div>
 
-        {/* Highlights */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {highlights.map((item, index) => (
+        {/* Competency highlights */}
+        <div className="grid sm:grid-cols-3 gap-5">
+          {[
+            {
+              icon: "⚡",
+              title: "Performance First",
+              desc: "FCP/LCP optimisation, lazy loading, Core Web Vitals — measurable wins at Myntra scale.",
+            },
+            {
+              icon: "📱",
+              title: "Cross-Platform",
+              desc: "React Native apps shipped to millions; web + mobile parity is a given, not a goal.",
+            },
+            {
+              icon: "🏗️",
+              title: "Scalable Systems",
+              desc: "Real-time content config for home, SIS, PLP, PDP pages across Myntra's entire surface.",
+            },
+          ].map((card, i) => (
             <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
-              className="glass rounded-3xl p-8 hover-glow text-center"
+              key={card.title}
+              custom={3 + i}
+              variants={fadeUp}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              className="rounded-2xl p-6"
+              style={{
+                background: "rgba(255,255,255,0.025)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
             >
-              <div className="inline-block p-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 mb-4">
-                <item.icon size={32} className="text-purple-400" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-              <p className="text-slate-400">{item.description}</p>
+              <div className="text-3xl mb-3" aria-hidden="true">{card.icon}</div>
+              <h3
+                className="font-bold mb-2 text-white"
+                style={{ fontFamily: "'Syne', sans-serif" }}
+              >
+                {card.title}
+              </h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{card.desc}</p>
             </motion.div>
           ))}
         </div>

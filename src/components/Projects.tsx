@@ -1,145 +1,230 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import Image from "next/image";
 
-const projects = [
+type Tag = "Production" | "Client" | "Side Project";
+
+interface Project {
+  emoji: string;
+  title: string;
+  tag: Tag;
+  description: string;
+  tech: string[];
+  liveUrl?: string;
+}
+
+const PROJECTS: Project[] = [
   {
+    emoji: "🛍️",
+    title: "Mnow",
+    tag: "Production",
+    description:
+      "Hyperlocal 2-hour fashion delivery platform built for Myntra. Led the React Native and web frontend — lazy loading, FCP/LCP optimisation, and real-time rack updates for millions of users.",
+    tech: ["React Native", "React", "Next.js", "Node.js", "MongoDB"],
+  },
+  {
+    emoji: "🎮",
     title: "Fanspace",
+    tag: "Production",
     description:
-      "Indian e-sports fan engagement platform launched by Esports Collective, providing comprehensive news, statistics, and tournament updates for the gaming community.",
-    image:
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80",
-    technologies: ["React Native", "MobX"],
+      "Indian e-sports fan engagement platform by Esports Collective — news, stats, tournaments. Built the Display page and bridged website modules with webview.",
+    tech: ["React Native", "MobX"],
     liveUrl: "https://fanspace.gg",
-    highlights: [
-      "Developed the Display page with seamless user experience",
-      "Integrated website modules with webview for hybrid functionality",
-      "Built for Esports Collective's fan engagement platform",
-    ],
   },
   {
+    emoji: "💼",
+    title: "Technomanagers.in",
+    tag: "Client",
+    description:
+      "Migrated from Lovable to Next.js with full SEO overhaul — structured data, sitemap, robots, og:image, and Core Web Vitals improvements.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
+    liveUrl: "https://technomanagers.in",
+  },
+  {
+    emoji: "🍹",
     title: "House of 30ML",
+    tag: "Client",
     description:
-      "Innovative party app designed to elevate the bar hopping experience, currently live in Pune with plans for rapid expansion across major cities.",
-    image:
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&q=80",
-    technologies: ["React Native", "React", "Node.js"],
+      "Bar-hopping platform live in Pune — full-stack build with React Native + React web. Architected the entire frontend and collaborated directly with the founder.",
+    tech: ["React Native", "React", "Node.js"],
     liveUrl: "https://play.google.com/store/apps/details?id=com.houseof30ml",
-    highlights: [
-      "Designed and architected the entire frontend structure and tech stack",
-      "Implemented core modules and production-ready features",
-      "Collaborated closely with founder for end-to-end app development",
-    ],
   },
   {
-    title: "Vartalabh",
+    emoji: "✈️",
+    title: "travelvisastack.com",
+    tag: "Side Project",
     description:
-      "AI-powered mental health companion platform that leverages artificial intelligence to provide supportive chat experiences for users seeking mental wellness support.",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-    technologies: ["React", "Vite", "Chakra UI", "Zustand"],
-    liveUrl: "https://vartalabh.in",
-    highlights: [
-      "Designed and developed the entire website from scratch",
-      "Built responsive UI with modern design principles",
-      "Integrated AI chat functionality for mental health support",
-    ],
+      "AI-powered visa requirements checker and trip itinerary generator. Built under Deviza Labs — Next.js with LLM integration and structured SEO.",
+    tech: ["Next.js", "AI/LLM", "TypeScript"],
+    liveUrl: "https://travelvisastack.com",
+  },
+  {
+    emoji: "💰",
+    title: "Deviza Expense Tracker",
+    tag: "Side Project",
+    description:
+      "LLM-based expense parser that accepts natural language inputs via Telegram and WhatsApp. No manual categorisation — just send a message.",
+    tech: ["Node.js", "LLM", "Telegram Bot", "WhatsApp API"],
   },
 ];
 
+const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
+  Production: {
+    bg: "rgba(99,102,241,0.1)",
+    color: "#a5b4fc",
+    border: "rgba(99,102,241,0.25)",
+  },
+  Client: {
+    bg: "rgba(245,158,11,0.1)",
+    color: "#fcd34d",
+    border: "rgba(245,158,11,0.25)",
+  },
+  "Side Project": {
+    bg: "rgba(168,85,247,0.1)",
+    color: "#d8b4fe",
+    border: "rgba(168,85,247,0.25)",
+  },
+};
+
 export default function Projects() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="projects" className="py-32 px-6" ref={ref}>
-      <div className="container mx-auto max-w-7xl">
+    <section
+      id="projects"
+      ref={ref}
+      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "#0a0a0f" }}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
+        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+      />
+
+      <div className="max-w-7xl mx-auto">
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 28 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
+          className="text-center mb-14"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Featured <span className="text-gradient">Projects</span>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Featured{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+            >
+              Projects
+            </span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            A selection of projects that showcase my skills and experience
+          <p className="text-slate-400 text-lg">
+            Production apps, client builds, and side experiments.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="glass rounded-3xl overflow-hidden hover-glow group"
-            >
-              {/* Project Image */}
-              <div className="relative h-48 overflow-hidden bg-slate-800">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  width={400}
-                  height={192}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
-              </div>
-
-              {/* Project Info */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-3">{project.title}</h3>
-                <p className="text-slate-400 mb-4 text-sm leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Highlights */}
-                <div className="mb-4 space-y-1">
-                  {project.highlights.map((highlight, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 text-xs text-slate-500"
-                    >
-                      <span className="text-purple-400">✓</span>
-                      <span>{highlight}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 text-xs border border-purple-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-3">
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-semibold w-full justify-center"
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PROJECTS.map((project, index) => {
+            const tagStyle = TAG_STYLES[project.tag];
+            return (
+              <motion.article
+                key={project.title}
+                initial={{ opacity: 0, y: 32 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: index * 0.08 }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="group relative rounded-2xl flex flex-col overflow-hidden"
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: "0 0 0 0 rgba(99,102,241,0)",
+                  transition: "box-shadow 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow =
+                    "0 0 32px rgba(99,102,241,0.12)";
+                  (e.currentTarget as HTMLElement).style.borderColor =
+                    "rgba(99,102,241,0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow =
+                    "0 0 0 0 rgba(99,102,241,0)";
+                  (e.currentTarget as HTMLElement).style.borderColor =
+                    "rgba(255,255,255,0.07)";
+                }}
+              >
+                {/* Top */}
+                <div className="p-6 pb-0 flex items-start justify-between gap-3">
+                  <span className="text-4xl" role="img" aria-label={project.title}>
+                    {project.emoji}
+                  </span>
+                  <span
+                    className="mt-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+                    style={{
+                      background: tagStyle.bg,
+                      color: tagStyle.color,
+                      border: `1px solid ${tagStyle.border}`,
+                    }}
                   >
-                    <ExternalLink size={16} />
-                    Live Demo
-                  </a>
+                    {project.tag}
+                  </span>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Body */}
+                <div className="p-6 flex flex-col flex-1 gap-4">
+                  <h3
+                    className="text-lg font-bold text-white"
+                    style={{ fontFamily: "'Syne', sans-serif" }}
+                  >
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm leading-relaxed flex-1">
+                    {project.description}
+                  </p>
+
+                  {/* Tech pills */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="px-2.5 py-1 rounded-full text-xs font-medium"
+                        style={{
+                          background: "rgba(99,102,241,0.08)",
+                          border: "1px solid rgba(99,102,241,0.15)",
+                          color: "#a5b4fc",
+                        }}
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Link */}
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-auto inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-white"
+                      style={{ color: "#a5b4fc" }}
+                      aria-label={`View ${project.title} live`}
+                    >
+                      <ExternalLink size={14} />
+                      View live
+                    </a>
+                  )}
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>
