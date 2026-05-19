@@ -1,94 +1,157 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const skillCategories = [
+const SKILL_CATEGORIES = [
   {
-    category: "Frontend",
+    label: "Frontend",
+    accent: "#6366f1",
     skills: [
-      { name: "React", level: 90 },
-      { name: "JavaScript", level: 90 },
-      { name: "React Native", level: 85 },
-      { name: "TypeScript", level: 85 },
-      { name: "HTML", level: 90 },
-      { name: "CSS", level: 85 },
+      { name: "React", level: 95 },
+      { name: "React Native", level: 90 },
+      { name: "Next.js", level: 92 },
+      { name: "TypeScript", level: 88 },
+      { name: "Tailwind CSS", level: 85 },
+      { name: "Framer Motion", level: 80 },
     ],
   },
   {
-    category: "Backend",
+    label: "Backend",
+    accent: "#a855f7",
     skills: [
-      { name: "Node.js", level: 90 },
-      { name: "MongoDB", level: 90 },
-      { name: "GoLang", level: 50 },
-      { name: "SQL", level: 50 },
-      { name: "PostgreSQL", level: 50 },
+      { name: "Node.js", level: 85 },
+      { name: "GoLang", level: 65 },
+      { name: "PostgreSQL", level: 78 },
+      { name: "MongoDB", level: 80 },
+      { name: "Prisma", level: 75 },
     ],
   },
   {
-    category: "Tools & Others",
+    label: "SEO & Performance",
+    accent: "#f59e0b",
     skills: [
-      { name: "Git", level: 90 },
-      { name: "Docker", level: 50 },
+      { name: "Core Web Vitals", level: 92 },
+      { name: "FCP / LCP Tuning", level: 90 },
+      { name: "Next.js SEO", level: 88 },
+      { name: "Lighthouse", level: 85 },
+    ],
+  },
+  {
+    label: "Tools & Infra",
+    accent: "#10b981",
+    skills: [
+      { name: "Git / GitHub", level: 92 },
+      { name: "GitLab CI/CD", level: 78 },
+      { name: "NGINX", level: 72 },
+      { name: "PM2", level: 70 },
+      { name: "Digital Ocean", level: 68 },
     ],
   },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, delay: i * 0.12 },
+  }),
+};
+
 export default function Skills() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="skills" className="py-32 px-6 bg-slate-950/50" ref={ref}>
-      <div className="container mx-auto max-w-6xl">
+    <section
+      id="skills"
+      ref={ref}
+      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "#0a0a0f" }}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
+        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+      />
+
+      <div className="max-w-6xl mx-auto">
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          custom={0}
+          variants={fadeUp}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="text-center mb-14"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Skills & <span className="text-gradient">Expertise</span>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Skills &amp;{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+            >
+              Expertise
+            </span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            Technologies and tools I work with to build amazing products
+          <p className="text-slate-400 text-lg">
+            Technologies and tools I reach for on every project.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {skillCategories.map((category, categoryIndex) => (
+        {/* Categories grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SKILL_CATEGORIES.map((cat, catIndex) => (
             <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: categoryIndex * 0.2 }}
-              className="glass rounded-3xl p-8 hover-glow"
+              key={cat.label}
+              custom={catIndex + 1}
+              variants={fadeUp}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+              className="rounded-2xl p-6"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.07)",
+              }}
             >
-              <h3 className="text-2xl font-bold mb-6 text-gradient">
-                {category.category}
+              <h3
+                className="font-bold text-base mb-5"
+                style={{
+                  fontFamily: "'Syne', sans-serif",
+                  color: cat.accent,
+                }}
+              >
+                {cat.label}
               </h3>
-              <div className="space-y-6">
-                {category.skills.map((skill, skillIndex) => (
+
+              <div className="space-y-4">
+                {cat.skills.map((skill, skillIndex) => (
                   <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-slate-300 font-medium">
+                    <div className="flex justify-between mb-1.5">
+                      <span className="text-slate-300 text-sm font-medium">
                         {skill.name}
                       </span>
-                      <span className="text-slate-500 text-sm">
-                        {skill.level}%
-                      </span>
+                      <span className="text-slate-500 text-xs">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-1.5 rounded-full overflow-hidden"
+                      style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
+                    >
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : {}}
+                        animate={inView ? { width: `${skill.level}%` } : {}}
                         transition={{
                           duration: 1,
-                          delay: categoryIndex * 0.2 + skillIndex * 0.1,
+                          delay: catIndex * 0.15 + skillIndex * 0.08,
                           ease: "easeOut",
                         }}
-                        className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                        className="h-full rounded-full"
+                        style={{
+                          background: `linear-gradient(90deg, ${cat.accent}, ${cat.accent}cc)`,
+                        }}
                       />
                     </div>
                   </div>
@@ -97,42 +160,6 @@ export default function Skills() {
             </motion.div>
           ))}
         </div>
-
-        {/* Additional Skills */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 glass rounded-3xl p-8"
-        >
-          <h3 className="text-xl font-bold mb-6 text-center">
-            Other Technologies & Methodologies
-          </h3>
-          <div className="flex flex-wrap gap-3 justify-center">
-            {[
-              "Agile/Scrum",
-              "Responsive Design",
-              "Mobile App Development",
-              "Cross-platform Development",
-              "API Integration",
-              "State Management",
-              "Performance Optimization",
-              "UI/UX Design",
-              "Web Security",
-              "CI/CD",
-            ].map((skill, index) => (
-              <motion.span
-                key={skill}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.3, delay: 0.8 + index * 0.05 }}
-                className="px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 hover:bg-purple-500/20 transition-colors"
-              >
-                {skill}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

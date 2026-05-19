@@ -1,133 +1,258 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Briefcase, Calendar } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 
-const experiences = [
+const EXPERIENCES = [
   {
-    role: "Senior Software Engineer",
-    company: "Myntra",
-    period: "Apr 2023 - Present",
-    description:
-      "Frontend developer in the merchandising team, responsible for developing and maintaining the home page and SIS (Search & Item Selection) pages across Myntra&apos;s app, mobile web, and internal applications that power these customer-facing pages.",
+    role: "Technical Lead",
+    company: "Myntra Designs Pvt. Ltd.",
+    location: "Bengaluru",
+    period: "Apr 2023 – Present",
+    current: true,
+    summary:
+      "Promoted to Technical Lead in the Merchandising team. Own the full frontend of home, SIS, PLP, and PDP pages across Myntra app, mobile web, and internal tooling.",
     achievements: [
-      "Designed and implemented Federator UI - a real-time configuration system for dynamic content across app pages (home, SIS, PLP, PDP) with advanced targeting capabilities",
-      "Built Algorithmic Store for personalized user experience, reducing page deployment time from 1 month to 2 days",
-      "Implemented lazy loading for product racks on Mnow pages to optimize performance and address SLA discrepancies",
-      "Developed Mnow - a hyperlocal speed delivery platform for fashion and beauty products with 2-hour delivery in select cities",
+      "Built Algorithmic Store — reduced page deployment cycle from 1 month to 2 days, driving measurable CTR lift.",
+      "Shipped Mnow — hyperlocal 2-hour fashion delivery platform built with React Native + web.",
+      "Implemented lazy loading on Mnow product racks, resolving SLA discrepancies and improving FCP/LCP.",
+      "Built Federator UI — real-time content configuration system with audience targeting across home, SIS, PLP, PDP.",
+      "Drove measurable FCP, LCP, and Core Web Vitals improvements across Myntra's consumer surfaces.",
     ],
-    technologies: [
-      "React",
-      "React Native",
-      "Node.js",
-      "MongoDB",
-      "GoLang",
-      "SQL",
-    ],
+    tech: ["React", "React Native", "Next.js", "Node.js", "MongoDB", "GoLang", "SQL"],
   },
   {
     role: "Product Engineer",
     company: "Codingmart Technologies",
-    period: "Sep 2019 - Mar 2023",
-    description:
-      "Full-stack developer responsible for building scalable web applications and backend infrastructure. Led development of multiple products from conception to deployment.",
+    location: "Remote / Chennai",
+    period: "Sep 2019 – Mar 2023",
+    current: false,
+    summary:
+      "Full-stack engineer building scalable web applications and backend infrastructure for early-stage startups across SaaS, fintech, and e-commerce verticals.",
     achievements: [
-      "Architected resilient backend framework with PostgreSQL and Prisma, optimizing data operations for superior system performance",
-      "Developed reusable React.js components with ContextAPI for seamless backend integration, enhancing code reusability and scalability",
-      "Led server infrastructure setup on Digital Ocean with NGINX and PM2, implementing GitLab CI/CD for efficient deployment across staging and production",
-      "Integrated Razorpay payment gateway for frictionless online vehicle booking experience",
-      "Built comprehensive campaign management tool with SMS gateway and cloud call technology for streamlined communication processes",
+      "Architected backend with PostgreSQL and Prisma — optimised data operations for superior system performance.",
+      "Built reusable React component library with ContextAPI, accelerating feature delivery across 3+ products.",
+      "Set up production infrastructure on Digital Ocean: NGINX, PM2, GitLab CI/CD pipelines.",
+      "Integrated Razorpay payment gateway for frictionless online booking flows.",
+      "Built campaign management tool with SMS gateway and cloud call technology.",
     ],
-    technologies: ["React", "Node.js", "PostgreSQL"],
+    tech: ["React", "Node.js", "PostgreSQL", "Prisma", "NGINX", "GitLab CI/CD"],
   },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, delay: i * 0.15 },
+  }),
+};
+
 export default function Experience() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
-    <section id="experience" className="py-32 px-6 bg-slate-950/50" ref={ref}>
-      <div className="container mx-auto max-w-6xl">
+    <section
+      id="experience"
+      ref={ref}
+      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "#0d0d14" }}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
+        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+      />
+
+      <div className="max-w-4xl mx-auto">
+        {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          custom={0}
+          variants={fadeUp}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Work <span className="text-gradient">Experience</span>
+          <h2
+            className="text-4xl md:text-5xl font-extrabold mb-4"
+            style={{ fontFamily: "'Syne', sans-serif" }}
+          >
+            Work{" "}
+            <span
+              className="bg-clip-text text-transparent"
+              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+            >
+              Experience
+            </span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-3xl mx-auto">
-            My professional journey and the impact I&apos;ve made
+          <p className="text-slate-400 text-lg">
+            5+ years of impact across product, scale, and performance.
           </p>
         </motion.div>
 
-        <div className="space-y-8">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="glass rounded-3xl p-8 hover-glow"
-            >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-6">
-                <div className="flex items-start gap-4 mb-4 md:mb-0">
-                  <div className="p-3 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20">
-                    <Briefcase className="text-purple-400" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold mb-1">{exp.role}</h3>
-                    <p className="text-lg text-purple-400">{exp.company}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-slate-400">
-                  <Calendar size={18} />
-                  <span>{exp.period}</span>
-                </div>
-              </div>
+        {/* Timeline */}
+        <div className="relative">
+          {/* Vertical line */}
+          <div
+            aria-hidden="true"
+            className="absolute left-4 top-2 bottom-2 w-px"
+            style={{
+              background:
+                "linear-gradient(to bottom, #6366f1, #a855f7 50%, rgba(168,85,247,0.15))",
+            }}
+          />
 
-              <p className="text-slate-300 mb-6 leading-relaxed">
-                {exp.description}
-              </p>
-
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">
-                  Key Achievements
-                </h4>
-                <ul className="space-y-2">
-                  {exp.achievements.map((achievement, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-slate-300"
-                    >
-                      <span className="text-purple-400 mt-1">▹</span>
-                      <span>{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <h4 className="text-sm font-semibold text-slate-400 mb-3 uppercase tracking-wider">
-                  Technologies
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {exp.technologies.map((tech, i) => (
+          <div className="space-y-8">
+            {EXPERIENCES.map((exp, index) => (
+              <motion.div
+                key={exp.company}
+                custom={index + 1}
+                variants={fadeUp}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="relative pl-14"
+              >
+                {/* Dot */}
+                <div className="absolute left-0 top-5 flex items-center justify-center w-8 h-8">
+                  {exp.current ? (
+                    <>
+                      <span
+                        className="absolute inline-block w-4 h-4 rounded-full animate-ping"
+                        style={{ backgroundColor: "rgba(99,102,241,0.4)" }}
+                      />
+                      <span
+                        className="relative inline-block w-3 h-3 rounded-full"
+                        style={{ backgroundColor: "#6366f1" }}
+                      />
+                    </>
+                  ) : (
                     <span
-                      key={i}
-                      className="px-4 py-2 rounded-full bg-purple-500/10 text-purple-300 text-sm border border-purple-500/20"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                      className="inline-block w-3 h-3 rounded-full"
+                      style={{ backgroundColor: "#475569" }}
+                    />
+                  )}
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Card */}
+                <div
+                  className="rounded-2xl overflow-hidden"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: `1px solid ${exp.current ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.06)"}`,
+                  }}
+                >
+                  {/* Header — always visible, acts as toggle */}
+                  <button
+                    onClick={() =>
+                      setOpenIndex(openIndex === index ? -1 : index)
+                    }
+                    className="w-full text-left px-6 py-5 flex items-start justify-between gap-4 group"
+                    aria-expanded={openIndex === index}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3
+                          className="text-lg font-bold text-white"
+                          style={{ fontFamily: "'Syne', sans-serif" }}
+                        >
+                          {exp.role}
+                        </h3>
+                        {exp.current && (
+                          <span
+                            className="px-2 py-0.5 rounded-full text-xs font-semibold"
+                            style={{
+                              background: "rgba(99,102,241,0.15)",
+                              color: "#a5b4fc",
+                              border: "1px solid rgba(99,102,241,0.3)",
+                            }}
+                          >
+                            Current
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-400">
+                        <span style={{ color: exp.current ? "#a5b4fc" : "#94a3b8" }}>
+                          {exp.company}
+                        </span>
+                        <span className="text-slate-600">·</span>
+                        <span>{exp.location}</span>
+                        <span className="text-slate-600">·</span>
+                        <span>{exp.period}</span>
+                      </div>
+                    </div>
+                    <ChevronDown
+                      size={18}
+                      className="mt-1 shrink-0 text-slate-500 transition-transform duration-300 group-hover:text-slate-300"
+                      style={{
+                        transform: openIndex === index ? "rotate(180deg)" : "rotate(0deg)",
+                      }}
+                    />
+                  </button>
+
+                  {/* Expandable content */}
+                  <AnimatePresence initial={false}>
+                    {openIndex === index && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                      >
+                        <div
+                          className="px-6 pb-6"
+                          style={{
+                            borderTop: "1px solid rgba(255,255,255,0.06)",
+                          }}
+                        >
+                          <p className="text-slate-400 text-sm leading-relaxed mt-4 mb-5">
+                            {exp.summary}
+                          </p>
+
+                          <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
+                            Key Achievements
+                          </h4>
+                          <ul className="space-y-2 mb-6">
+                            {exp.achievements.map((a, i) => (
+                              <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                                <span className="mt-1 shrink-0" style={{ color: "#6366f1" }}>
+                                  ▹
+                                </span>
+                                <span>{a}</span>
+                              </li>
+                            ))}
+                          </ul>
+
+                          <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
+                            Stack
+                          </h4>
+                          <div className="flex flex-wrap gap-2">
+                            {exp.tech.map((t) => (
+                              <span
+                                key={t}
+                                className="px-3 py-1 rounded-full text-xs font-medium"
+                                style={{
+                                  background: "rgba(99,102,241,0.1)",
+                                  border: "1px solid rgba(99,102,241,0.2)",
+                                  color: "#a5b4fc",
+                                }}
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
