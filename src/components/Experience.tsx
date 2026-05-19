@@ -24,7 +24,7 @@ const EXPERIENCES = [
   {
     role: "Product Engineer",
     company: "Codingmart Technologies",
-    location: "Remote / Chennai",
+    location: "Remote / Coimbatore",
     period: "Sep 2019 – Mar 2023",
     current: false,
     summary:
@@ -70,10 +70,10 @@ export default function Experience() {
       <div className="max-w-4xl mx-auto">
         {/* Heading */}
         <motion.div
-          custom={0}
-          variants={fadeUp}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          initial={{ opacity: 0, y: 40, rotateX: 18 }}
+          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ transformPerspective: 800 }}
           className="text-center mb-16"
         >
           <h2
@@ -89,19 +89,23 @@ export default function Experience() {
             </span>
           </h2>
           <p className="text-slate-400 text-lg">
-            5+ years of impact across product, scale, and performance.
+            6+ years of impact across product, scale, and performance.
           </p>
         </motion.div>
 
         {/* Timeline */}
         <div className="relative">
-          {/* Vertical line */}
-          <div
+          {/* Vertical line — draws in on scroll */}
+          <motion.div
             aria-hidden="true"
             className="absolute left-4 top-2 bottom-2 w-px"
+            initial={{ scaleY: 0 }}
+            animate={inView ? { scaleY: 1 } : {}}
+            transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
             style={{
               background:
                 "linear-gradient(to bottom, #6366f1, #a855f7 50%, rgba(168,85,247,0.15))",
+              transformOrigin: "top",
             }}
           />
 
@@ -115,8 +119,18 @@ export default function Experience() {
                 animate={inView ? "visible" : "hidden"}
                 className="relative pl-14"
               >
-                {/* Dot */}
-                <div className="absolute left-0 top-5 flex items-center justify-center w-8 h-8">
+                {/* Dot — spring pop on scroll */}
+                <motion.div
+                  className="absolute left-0 top-5 flex items-center justify-center w-8 h-8"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={inView ? { scale: 1, opacity: 1 } : {}}
+                  transition={{
+                    type: "spring",
+                    stiffness: 380,
+                    damping: 14,
+                    delay: 0.5 + index * 0.3,
+                  }}
+                >
                   {exp.current ? (
                     <>
                       <span
@@ -134,7 +148,7 @@ export default function Experience() {
                       style={{ backgroundColor: "#475569" }}
                     />
                   )}
-                </div>
+                </motion.div>
 
                 {/* Card */}
                 <div
@@ -199,7 +213,10 @@ export default function Experience() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{
+                          height: { type: "spring", stiffness: 120, damping: 22 },
+                          opacity: { duration: 0.18 },
+                        }}
                         className="overflow-hidden"
                       >
                         <div

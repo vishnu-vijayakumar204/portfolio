@@ -101,9 +101,10 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto">
         {/* Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
+          initial={{ opacity: 0, y: 40, rotateX: 18 }}
+          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          style={{ transformPerspective: 800 }}
           className="text-center mb-14"
         >
           <h2
