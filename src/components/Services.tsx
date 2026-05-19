@@ -55,7 +55,7 @@ export default function Services() {
     <section
       id="services"
       ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       style={{ backgroundColor: "#0d0d14" }}
     >
       <div
@@ -91,7 +91,7 @@ export default function Services() {
         </motion.div>
 
         {/* Service cards */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-12">
+        <div className="grid sm:grid-cols-2 gap-6 mb-12" style={{ perspective: "1000px" }}>
           {SERVICES.map((svc, index) => (
             <motion.div
               key={svc.title}
@@ -99,10 +99,19 @@ export default function Services() {
               variants={fadeUp}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="rounded-2xl p-7 flex flex-col gap-4 group hover:border-indigo-500/30 transition-colors duration-300"
+              className="rounded-2xl p-7 flex flex-col gap-4 group cursor-default"
               style={{
                 background: "rgba(255,255,255,0.03)",
                 border: "1px solid rgba(255,255,255,0.07)",
+                transformStyle: "preserve-3d",
+                willChange: "transform",
+              }}
+              whileHover={{
+                scale: 1.03,
+                rotateX: -3,
+                rotateY: 4,
+                borderColor: "rgba(99,102,241,0.3)",
+                transition: { type: "spring", stiffness: 250, damping: 18 },
               }}
             >
               <div className="flex items-start gap-4">

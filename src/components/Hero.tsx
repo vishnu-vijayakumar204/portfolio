@@ -174,7 +174,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-mt-0"
       style={{ backgroundColor: "#0a0a0f" }}
     >
       {/* Grid overlay */}
@@ -190,24 +190,30 @@ export default function Hero() {
         }}
       />
 
-      {/* Radial glow blobs */}
+      {/* Radial glow blobs — animated float */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
+        <motion.div
+          animate={{ y: [0, 40, 0], x: [0, 20, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -top-60 -left-60 w-[700px] h-[700px] rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(99,102,241,0.18), transparent 65%)",
           }}
         />
-        <div
+        <motion.div
+          animate={{ y: [0, -40, 0], x: [0, -25, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute -bottom-60 -right-60 w-[700px] h-[700px] rounded-full blur-3xl"
           style={{
             background: "radial-gradient(circle, rgba(168,85,247,0.14), transparent 65%)",
           }}
         />
-        <div
+        <motion.div
+          animate={{ scale: [1, 1.15, 1], opacity: [0.04, 0.08, 0.04] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(ellipse, rgba(245,158,11,0.04), transparent 60%)",
+            background: "radial-gradient(ellipse, rgba(245,158,11,0.06), transparent 60%)",
           }}
         />
       </div>
@@ -248,7 +254,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.6 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight tracking-tight"
             style={{ fontFamily: "'Syne', sans-serif" }}
           >
             <span className="text-white">Vishnu </span>

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, MapPin, Send } from "lucide-react";
 
 const BUDGET_OPTIONS = [
   "< ₹50,000",
@@ -61,7 +61,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       style={{ backgroundColor: "#0d0d14" }}
     >
       <div
@@ -125,12 +125,6 @@ export default function Contact() {
                 label: "Email",
                 value: "vishnu.vijayakumar204@gmail.com",
                 href: "mailto:vishnu.vijayakumar204@gmail.com",
-              },
-              {
-                icon: Phone,
-                label: "Phone",
-                value: "+91 75981 10694",
-                href: "tel:+917598110694",
               },
               {
                 icon: MapPin,

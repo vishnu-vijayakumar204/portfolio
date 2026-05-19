@@ -45,7 +45,7 @@ const SKILL_CATEGORIES = [
       { name: "GitLab CI/CD", level: 78 },
       { name: "NGINX", level: 72 },
       { name: "PM2", level: 70 },
-      { name: "Digital Ocean", level: 68 },
+      { name: "AWS", level: 70 },
     ],
   },
 ];
@@ -67,7 +67,7 @@ export default function Skills() {
     <section
       id="skills"
       ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       style={{ backgroundColor: "#0a0a0f" }}
     >
       <div

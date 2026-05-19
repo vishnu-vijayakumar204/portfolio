@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Clock } from "lucide-react";
 
 type Tag = "Production" | "Client" | "Side Project";
 
@@ -10,6 +10,7 @@ interface Project {
   emoji: string;
   title: string;
   tag: Tag;
+  wip?: boolean;
   description: string;
   tech: string[];
   liveUrl?: string;
@@ -17,21 +18,12 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    emoji: "🛍️",
-    title: "Mnow",
-    tag: "Production",
-    description:
-      "Hyperlocal 2-hour fashion delivery platform built for Myntra. Led the React Native and web frontend — lazy loading, FCP/LCP optimisation, and real-time rack updates for millions of users.",
-    tech: ["React Native", "React", "Next.js", "Node.js", "MongoDB"],
-  },
-  {
     emoji: "🎮",
     title: "Fanspace",
     tag: "Production",
     description:
       "Indian e-sports fan engagement platform by Esports Collective — news, stats, tournaments. Built the Display page and bridged website modules with webview.",
     tech: ["React Native", "MobX"],
-    liveUrl: "https://fanspace.gg",
   },
   {
     emoji: "💼",
@@ -49,7 +41,7 @@ const PROJECTS: Project[] = [
     description:
       "Bar-hopping platform live in Pune — full-stack build with React Native + React web. Architected the entire frontend and collaborated directly with the founder.",
     tech: ["React Native", "React", "Node.js"],
-    liveUrl: "https://play.google.com/store/apps/details?id=com.houseof30ml",
+    liveUrl: "https://www.houseof30ml.in/",
   },
   {
     emoji: "✈️",
@@ -64,6 +56,7 @@ const PROJECTS: Project[] = [
     emoji: "💰",
     title: "Deviza Expense Tracker",
     tag: "Side Project",
+    wip: true,
     description:
       "LLM-based expense parser that accepts natural language inputs via Telegram and WhatsApp. No manual categorisation — just send a message.",
     tech: ["Node.js", "LLM", "Telegram Bot", "WhatsApp API"],
@@ -96,7 +89,7 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       style={{ backgroundColor: "#0a0a0f" }}
     >
       <div
@@ -130,8 +123,8 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid with perspective for 3D child effects */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1200px" }}>
           {PROJECTS.map((project, index) => {
             const tagStyle = TAG_STYLES[project.tag];
             return (
@@ -139,43 +132,62 @@ export default function Projects() {
                 key={project.title}
                 initial={{ opacity: 0, y: 32 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: index * 0.08 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="group relative rounded-2xl flex flex-col overflow-hidden"
+                transition={{ duration: 0.55, delay: index * 0.09 }}
+                whileHover={{
+                  scale: 1.03,
+                  rotateX: -3,
+                  rotateY: 4,
+                  transition: { type: "spring", stiffness: 250, damping: 18 },
+                }}
+                className="group relative rounded-2xl flex flex-col overflow-hidden cursor-default"
                 style={{
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.07)",
-                  boxShadow: "0 0 0 0 rgba(99,102,241,0)",
-                  transition: "box-shadow 0.3s ease",
+                  transformStyle: "preserve-3d",
+                  willChange: "transform",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow =
-                    "0 0 32px rgba(99,102,241,0.12)";
                   (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(99,102,241,0.2)";
+                    "rgba(99,102,241,0.28)";
+                  (e.currentTarget as HTMLElement).style.boxShadow =
+                    "0 20px 60px rgba(99,102,241,0.15)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.boxShadow =
-                    "0 0 0 0 rgba(99,102,241,0)";
                   (e.currentTarget as HTMLElement).style.borderColor =
                     "rgba(255,255,255,0.07)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
                 }}
               >
-                {/* Top */}
+                {/* Top row */}
                 <div className="p-6 pb-0 flex items-start justify-between gap-3">
                   <span className="text-4xl" role="img" aria-label={project.title}>
                     {project.emoji}
                   </span>
-                  <span
-                    className="mt-1 px-2.5 py-1 rounded-full text-xs font-semibold"
-                    style={{
-                      background: tagStyle.bg,
-                      color: tagStyle.color,
-                      border: `1px solid ${tagStyle.border}`,
-                    }}
-                  >
-                    {project.tag}
-                  </span>
+                  <div className="flex items-center gap-2 mt-1 flex-wrap justify-end">
+                    {project.wip && (
+                      <span
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+                        style={{
+                          background: "rgba(245,158,11,0.1)",
+                          color: "#f59e0b",
+                          border: "1px solid rgba(245,158,11,0.3)",
+                        }}
+                      >
+                        <Clock size={11} />
+                        WIP
+                      </span>
+                    )}
+                    <span
+                      className="px-2.5 py-1 rounded-full text-xs font-semibold"
+                      style={{
+                        background: tagStyle.bg,
+                        color: tagStyle.color,
+                        border: `1px solid ${tagStyle.border}`,
+                      }}
+                    >
+                      {project.tag}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Body */}
@@ -207,7 +219,7 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* Link */}
+                  {/* Live link */}
                   {project.liveUrl && (
                     <a
                       href={project.liveUrl}

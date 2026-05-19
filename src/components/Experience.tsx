@@ -12,11 +12,10 @@ const EXPERIENCES = [
     period: "Apr 2023 – Present",
     current: true,
     summary:
-      "Promoted to Technical Lead in the Merchandising team. Own the full frontend of home, SIS, PLP, and PDP pages across Myntra app, mobile web, and internal tooling.",
+      "Technical Lead in the Merchandising team — owning the full frontend of home, SIS, PLP, and PDP pages across Myntra app, mobile web, and internal tooling.",
     achievements: [
       "Built Algorithmic Store — reduced page deployment cycle from 1 month to 2 days, driving measurable CTR lift.",
-      "Shipped Mnow — hyperlocal 2-hour fashion delivery platform built with React Native + web.",
-      "Implemented lazy loading on Mnow product racks, resolving SLA discrepancies and improving FCP/LCP.",
+      "Shipped Mnow (hyperlocal 2-hour delivery) — led React Native + web frontend, implemented lazy loading on product racks, resolving SLA discrepancies and improving FCP/LCP.",
       "Built Federator UI — real-time content configuration system with audience targeting across home, SIS, PLP, PDP.",
       "Drove measurable FCP, LCP, and Core Web Vitals improvements across Myntra's consumer surfaces.",
     ],
@@ -59,7 +58,7 @@ export default function Experience() {
     <section
       id="experience"
       ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8"
+      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
       style={{ backgroundColor: "#0d0d14" }}
     >
       <div
