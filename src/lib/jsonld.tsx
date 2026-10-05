@@ -23,7 +23,6 @@ export const personSchema = {
     "Technical Lead at Myntra and freelance React, Next.js and React Native developer for startups and product teams.",
   url: SITE_URL,
   email: EMAIL,
-  telephone: "+917598110694",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Bengaluru",
