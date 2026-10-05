@@ -4,7 +4,7 @@ import WorkWithMe from "@/components/WorkWithMe";
 export const metadata: Metadata = {
   title: "Work With Me",
   description:
-    "Technical Lead at Myntra specializing in React, Next.js and React Native. I work with startups and businesses to build new products, ship complex features and improve existing applications.",
+    "Technical Lead at Myntra (React, React Native) who also builds and ships products with Next.js. I work with startups and businesses to build new products, ship complex features and improve existing applications.",
   alternates: { canonical: "/work-with-me" },
   openGraph: {
     title: "Work With Me – Senior React / Next.js Engineer",
