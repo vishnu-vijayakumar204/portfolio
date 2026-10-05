@@ -37,7 +37,7 @@ function Block({
     >
       <h2
         className="text-xs font-semibold uppercase tracking-widest mb-4"
-        style={{ color: "#a5b4fc" }}
+        style={{ color: "var(--primary)" }}
       >
         {label}
       </h2>
@@ -50,11 +50,11 @@ function List({ items }: { items: string[] }) {
   return (
     <ul className="space-y-3">
       {items.map((item) => (
-        <li key={item} className="flex gap-3 text-slate-300 leading-relaxed">
+        <li key={item} className="flex gap-3 text-foreground/80 leading-relaxed">
           <span
             aria-hidden="true"
             className="mt-2.5 h-1.5 w-1.5 rounded-full shrink-0"
-            style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+            style={{ background: "var(--primary)" }}
           />
           <span style={todoStyle(item)}>{item}</span>
         </li>
@@ -72,11 +72,11 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
   const why = visible([study.whyItMatters].filter(Boolean));
 
   return (
-    <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "#0a0a0f" }}>
+    <div className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--background)" }}>
       <div className="max-w-3xl mx-auto">
         <Link
           href="/work-with-me#work"
-          className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors mb-10"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-10"
         >
           <ArrowLeft size={14} /> Back to selected work
         </Link>
@@ -87,16 +87,16 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
           transition={{ duration: 0.6 }}
           className="mb-14"
         >
-          <p className="text-sm mb-3" style={{ color: "#a5b4fc" }}>
+          <p className="text-sm mb-3" style={{ color: "var(--primary)" }}>
             <span aria-hidden="true">{study.emoji}</span> Case study ·{" "}
             {study.category && <span style={todoStyle(study.category)}>{study.category}</span>}
             {study.wip && (
               <span
                 className="ml-3 px-2 py-0.5 rounded-full text-[10px] font-semibold align-middle"
                 style={{
-                  background: "rgba(245,158,11,0.1)",
-                  color: "#f59e0b",
-                  border: "1px solid rgba(245,158,11,0.3)",
+                  background: "color-mix(in srgb, var(--primary) 10%, transparent)",
+                  color: "var(--primary)",
+                  border: "1px solid color-mix(in srgb, var(--primary) 30%, transparent)",
                 }}
               >
                 WIP
@@ -105,12 +105,11 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
           </p>
           <h1
             className="text-4xl md:text-6xl font-extrabold mb-5"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             {study.title}
           </h1>
           {whatItIs.map((s) => (
-            <p key={s} className="text-lg text-slate-400 leading-relaxed mb-6" style={todoStyle(s)}>
+            <p key={s} className="text-lg text-muted-foreground leading-relaxed mb-6" style={todoStyle(s)}>
               {s}
             </p>
           ))}
@@ -122,9 +121,9 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
                   key={t}
                   className="px-3 py-1 rounded-full text-xs font-medium"
                   style={{
-                    background: "rgba(99,102,241,0.08)",
-                    border: "1px solid rgba(99,102,241,0.2)",
-                    color: "#a5b4fc",
+                    background: "color-mix(in srgb, var(--primary) 8%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
+                    color: "var(--primary)",
                   }}
                 >
                   {t}
@@ -137,9 +136,9 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
             href={study.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white"
-            style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
-            whileHover={{ scale: 1.04, boxShadow: "0 0 24px rgba(99,102,241,0.4)" }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-primary-foreground"
+            style={{ background: "var(--primary)" }}
+            whileHover={{ scale: 1.04, boxShadow: "var(--shadow-lg)" }}
             whileTap={{ scale: 0.97 }}
           >
             View live site <ArrowUpRight size={16} />
@@ -149,7 +148,7 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
         {problem.length > 0 && (
           <Block index={0} label="The problem">
             {problem.map((s) => (
-              <p key={s} className="text-slate-300 leading-relaxed" style={todoStyle(s)}>
+              <p key={s} className="text-foreground/80 leading-relaxed" style={todoStyle(s)}>
                 {s}
               </p>
             ))}
@@ -179,10 +178,10 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
             {why.map((s) => (
               <p
                 key={s}
-                className="text-lg text-slate-200 leading-relaxed rounded-2xl p-6"
+                className="text-lg text-foreground/80 leading-relaxed rounded-2xl p-6"
                 style={{
-                  background: "rgba(99,102,241,0.06)",
-                  border: "1px solid rgba(99,102,241,0.2)",
+                  background: "color-mix(in srgb, var(--primary) 6%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
                   ...(todoStyle(s) ?? {}),
                 }}
               >
@@ -199,15 +198,15 @@ export default function CaseStudyView({ study }: { study: CaseStudy }) {
           whileInView="visible"
           viewport={{ once: true }}
           className="text-center pt-8"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+          style={{ borderTop: "1px solid var(--border)" }}
         >
-          <h2 className="text-2xl font-bold mb-3" style={{ fontFamily: "'Syne', sans-serif" }}>
+          <h2 className="text-2xl font-bold mb-3">
             Have something similar in mind?
           </h2>
           <a
             href={`mailto:${EMAIL}?subject=${encodeURIComponent(`Project enquiry: inspired by ${study.title}`)}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold hover:text-white transition-colors"
-            style={{ color: "#a5b4fc" }}
+            className="inline-flex items-center gap-2 text-sm font-semibold hover:text-foreground transition-colors"
+            style={{ color: "var(--primary)" }}
           >
             <Mail size={16} /> Tell me about it
           </a>

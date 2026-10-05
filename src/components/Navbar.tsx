@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -53,8 +54,8 @@ export default function Navbar() {
           ? {
               backdropFilter: "blur(14px)",
               WebkitBackdropFilter: "blur(14px)",
-              backgroundColor: "rgba(10,10,15,0.88)",
-              borderBottom: "1px solid rgba(255,255,255,0.07)",
+              backgroundColor: "color-mix(in srgb, var(--background) 88%, transparent)",
+              borderBottom: "1px solid var(--border)",
             }
           : {}
       }
@@ -73,11 +74,7 @@ export default function Navbar() {
             aria-label="Home"
           >
             <span
-              className="text-2xl font-extrabold bg-clip-text text-transparent"
-              style={{
-                fontFamily: "'Syne', sans-serif",
-                backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)",
-              }}
+              className="text-2xl font-extrabold text-primary"
             >
               VV
             </span>
@@ -90,7 +87,7 @@ export default function Navbar() {
                 key={link.href}
                 href={isHome ? link.href : `/${link.href}`}
                 onClick={(e) => scrollToSection(e, link.href)}
-                className="text-sm text-slate-400 hover:text-white transition-colors duration-200 relative group"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 relative group"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + i * 0.07 }}
@@ -98,19 +95,20 @@ export default function Navbar() {
                 {link.label}
                 <span
                   className="absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300"
-                  style={{ background: "linear-gradient(90deg, #6366f1, #a855f7)" }}
+                  style={{ background: "var(--primary)" }}
                 />
               </MotionLink>
             ))}
           </nav>
 
           {/* CTA + hamburger */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
             <MotionLink
               href={WORK_WITH_ME}
-              className="hidden md:inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white"
-              style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(99,102,241,0.4)" }}
+              className="hidden md:inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-primary-foreground"
+              style={{ background: "var(--primary)" }}
+              whileHover={{ scale: 1.05, boxShadow: "var(--shadow-lg)" }}
               whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -119,7 +117,7 @@ export default function Navbar() {
               Work With Me
             </MotionLink>
             <button
-              className="md:hidden text-slate-400 hover:text-white transition-colors p-1"
+              className="md:hidden text-muted-foreground hover:text-foreground transition-colors p-1"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
@@ -164,8 +162,8 @@ export default function Navbar() {
             className="md:hidden"
             style={{
               overflow: "hidden",
-              borderTop: "1px solid rgba(255,255,255,0.07)",
-              backgroundColor: "rgba(10,10,15,0.97)",
+              borderTop: "1px solid var(--border)",
+              backgroundColor: "color-mix(in srgb, var(--background) 97%, transparent)",
               backdropFilter: "blur(16px)",
               WebkitBackdropFilter: "blur(16px)",
             }}
@@ -184,7 +182,7 @@ export default function Navbar() {
                   key={link.href}
                   href={isHome ? link.href : `/${link.href}`}
                   onClick={(e) => scrollToSection(e, link.href)}
-                  className="text-slate-300 hover:text-white text-base py-3 px-2 rounded-lg hover:bg-white/5 transition-colors block"
+                  className="text-foreground/80 hover:text-foreground text-base py-3 px-2 rounded-lg hover:bg-muted transition-colors block"
                   variants={{
                     hidden: { opacity: 0, x: -12 },
                     visible: { opacity: 1, x: 0, transition: { duration: 0.2 } },
@@ -196,8 +194,8 @@ export default function Navbar() {
               <MotionLink
                 href={WORK_WITH_ME}
                 onClick={() => setMobileOpen(false)}
-                className="mt-3 inline-flex items-center justify-center px-5 py-3 rounded-full text-sm font-semibold text-white"
-                style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+                className="mt-3 inline-flex items-center justify-center px-5 py-3 rounded-full text-sm font-semibold text-primary-foreground"
+                style={{ background: "var(--primary)" }}
                 variants={{
                   hidden: { opacity: 0, y: 8 },
                   visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },

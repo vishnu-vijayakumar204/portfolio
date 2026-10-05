@@ -100,7 +100,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -109,8 +109,14 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"
+        />
+        <script
+          // Apply the saved/OS theme before first paint to avoid a flash.
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();`,
+          }}
         />
         <script
           type="application/ld+json"
@@ -119,7 +125,7 @@ export default function RootLayout({
       </head>
       <body
         className="antialiased"
-        style={{ backgroundColor: "#0a0a0f", color: "#f1f5f9" }}
+        style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}
       >
         <Navbar />
         <main>{children}</main>

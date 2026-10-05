@@ -6,7 +6,7 @@ import { motion, useInView } from "framer-motion";
 const SKILL_CATEGORIES = [
   {
     label: "Frontend",
-    accent: "#6366f1",
+    accent: "var(--primary)",
     skills: [
       { name: "React", level: 95 },
       { name: "React Native", level: 90 },
@@ -18,7 +18,7 @@ const SKILL_CATEGORIES = [
   },
   {
     label: "Backend",
-    accent: "#a855f7",
+    accent: "var(--primary)",
     skills: [
       { name: "Node.js", level: 85 },
       { name: "GoLang", level: 65 },
@@ -29,7 +29,7 @@ const SKILL_CATEGORIES = [
   },
   {
     label: "SEO & Performance",
-    accent: "#f59e0b",
+    accent: "var(--primary)",
     skills: [
       { name: "Core Web Vitals", level: 92 },
       { name: "FCP / LCP Tuning", level: 90 },
@@ -39,7 +39,7 @@ const SKILL_CATEGORIES = [
   },
   {
     label: "Tools & Infra",
-    accent: "#10b981",
+    accent: "var(--primary)",
     skills: [
       { name: "Git / GitHub", level: 92 },
       { name: "GitLab CI/CD", level: 78 },
@@ -74,12 +74,12 @@ export default function Skills() {
       id="skills"
       ref={ref}
       className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
-      style={{ backgroundColor: "#0a0a0f" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
       />
 
       <div className="max-w-6xl mx-auto">
@@ -93,17 +93,15 @@ export default function Skills() {
         >
           <h2
             className="text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             Skills &amp;{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+              className="text-primary"
             >
               Expertise
             </span>
           </h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             Technologies and tools I reach for on every project.
           </p>
         </motion.div>
@@ -125,8 +123,8 @@ export default function Skills() {
               }}
               className="rounded-2xl p-6 cursor-default"
               style={{
-                background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "var(--card)",
+                border: "1px solid var(--border)",
                 transformStyle: "preserve-3d",
                 willChange: "transform",
               }}
@@ -134,7 +132,7 @@ export default function Skills() {
               <h3
                 className="font-bold text-base mb-5"
                 style={{
-                  fontFamily: "'Syne', sans-serif",
+                  
                   color: cat.accent,
                 }}
               >
@@ -145,14 +143,14 @@ export default function Skills() {
                 {cat.skills.map((skill, skillIndex) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-1.5">
-                      <span className="text-slate-300 text-sm font-medium">
+                      <span className="text-foreground/80 text-sm font-medium">
                         {skill.name}
                       </span>
-                      <span className="text-slate-500 text-xs">{skill.level}%</span>
+                      <span className="text-muted-foreground text-xs">{skill.level}%</span>
                     </div>
                     <div
                       className="h-1.5 rounded-full overflow-hidden"
-                      style={{ backgroundColor: "rgba(255,255,255,0.07)" }}
+                      style={{ backgroundColor: "var(--muted)" }}
                     >
                       <motion.div
                         initial={{ width: "0%" }}
@@ -175,7 +173,7 @@ export default function Skills() {
                         }}
                         className="h-full rounded-full"
                         style={{
-                          background: `linear-gradient(90deg, ${cat.accent}, ${cat.accent}cc)`,
+                          background: cat.accent,
                         }}
                       />
                     </div>

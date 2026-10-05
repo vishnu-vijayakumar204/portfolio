@@ -7,12 +7,12 @@ export function visible(items: string[]): string[] {
   return items.filter((s) => SHOW_TODOS || !isTodo(s));
 }
 
-/** Amber dashed styling for placeholders so they're obvious in dev. */
+/** Dashed destructive styling for placeholders so they're obvious in dev. */
 export function todoStyle(s: string): React.CSSProperties | undefined {
   return isTodo(s)
     ? {
-        border: "1px dashed rgba(245,158,11,0.5)",
-        color: "#fcd34d",
+        border: "1px dashed var(--destructive)",
+        color: "var(--destructive)",
         borderRadius: 8,
         padding: "2px 8px",
       }
