@@ -134,9 +134,9 @@ export default function WorkWithMe() {
             transition={{ duration: 0.6, delay: 0.25 }}
             className="text-lg md:text-xl text-slate-400 max-w-2xl mb-9 leading-relaxed"
           >
-            I&apos;m a Technical Lead at Myntra specializing in React, Next.js and React Native. I work
-            with startups and businesses to build new products, ship complex features and improve
-            existing applications.
+            I&apos;m a Technical Lead at Myntra, working in React and React Native at scale. On my own
+            projects I build and ship with React, Next.js and React Native. I work with startups and
+            businesses to build new products, ship complex features and improve existing applications.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -291,9 +291,9 @@ export default function WorkWithMe() {
             Technical Lead, Myntra
           </h2>
           <p className="text-slate-300 leading-relaxed">
-            Leading frontend engineering for a large-scale e-commerce platform, across React, React
-            Native, Next.js and modern frontend architecture, with a focus on performance and Core
-            Web Vitals. The same standards go into the projects I take on independently.
+            Leading frontend engineering for a large-scale e-commerce platform, in React and React
+            Native, with a focus on performance, Core Web Vitals and app vitals. The same standards
+            go into the projects I take on independently.
           </p>
         </motion.div>
       </section>
