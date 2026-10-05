@@ -211,9 +211,9 @@ export default function WorkWithMe() {
                       <span
                         className="ml-3 px-2 py-0.5 rounded-full text-[10px] font-semibold align-middle"
                         style={{
-                          background: "color-mix(in srgb, var(--primary) 10%, transparent)",
-                          color: "var(--primary)",
-                          border: "1px solid color-mix(in srgb, var(--primary) 30%, transparent)",
+                          background: "var(--amber-bg)",
+                          color: "var(--amber)",
+                          border: "1px solid var(--amber-border)",
                         }}
                       >
                         WIP

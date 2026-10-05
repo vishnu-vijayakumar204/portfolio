@@ -22,7 +22,8 @@
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #f0f7ff;
+  /* Darkened from #f0f7ff, which was nearly invisible on the light background. */
+  --ring: #5b8ff8;
   --chart-1: #a1caff;
   --chart-2: #334155;
   --chart-3: #256bf7;
@@ -109,6 +110,20 @@
   --shadow-lg: 0px 10px 25px 0px hsl(0 0% 0% / 0.40), 0px 4px 6px -1px hsl(0 0% 0% / 0.40);
   --shadow-xl: 0px 10px 25px 0px hsl(0 0% 0% / 0.40), 0px 8px 10px -1px hsl(0 0% 0% / 0.40);
   --shadow-2xl: 0px 10px 25px 0px hsl(0 0% 0% / 1.00);
+}
+
+/* Amber status accent for the WIP / Own Product badges. Not part of the supplied
+   design system, which has no warning colour. */
+:root {
+  --amber: #b45309;
+  --amber-bg: rgb(245 158 11 / 0.12);
+  --amber-border: rgb(245 158 11 / 0.4);
+}
+
+.dark {
+  --amber: #fbbf24;
+  --amber-bg: rgb(245 158 11 / 0.14);
+  --amber-border: rgb(245 158 11 / 0.4);
 }
 
 @theme inline {

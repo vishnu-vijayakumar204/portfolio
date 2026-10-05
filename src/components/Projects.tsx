@@ -74,9 +74,9 @@ const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
     border: "color-mix(in srgb, var(--primary) 25%, transparent)",
   },
   "Own Product": {
-    bg: "color-mix(in srgb, var(--primary) 10%, transparent)",
-    color: "var(--primary)",
-    border: "color-mix(in srgb, var(--primary) 25%, transparent)",
+    bg: "var(--amber-bg)",
+    color: "var(--amber)",
+    border: "var(--amber-border)",
   },
 };
 
@@ -166,9 +166,9 @@ export default function Projects() {
                       <span
                         className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
                         style={{
-                          background: "color-mix(in srgb, var(--primary) 10%, transparent)",
-                          color: "var(--primary)",
-                          border: "1px solid color-mix(in srgb, var(--primary) 30%, transparent)",
+                          background: "var(--amber-bg)",
+                          color: "var(--amber)",
+                          border: "1px solid var(--amber-border)",
                         }}
                       >
                         <Clock size={11} />
