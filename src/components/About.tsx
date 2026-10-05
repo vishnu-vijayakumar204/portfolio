@@ -22,18 +22,18 @@ export default function About() {
       id="about"
       ref={ref}
       className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20 overflow-hidden"
-      style={{ backgroundColor: "#0a0a0f" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       {/* Ambient glow */}
       <div
         aria-hidden="true"
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-3xl pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, rgba(99,102,241,0.07), transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse, color-mix(in srgb, var(--primary) 7%, transparent), transparent 70%)" }}
       />
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
       />
 
       <div className="max-w-6xl mx-auto">
@@ -47,17 +47,15 @@ export default function About() {
         >
           <h2
             className="text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             About{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+              className="text-primary"
             >
               Me
             </span>
           </h2>
-          <p className="text-slate-400 text-lg max-w-xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Technical Lead by day, product builder by night.
           </p>
         </motion.div>
@@ -80,36 +78,36 @@ export default function About() {
           <div
             className="rounded-2xl p-8 md:p-10 max-w-3xl mx-auto"
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "var(--card)",
+              border: "1px solid var(--border)",
             }}
           >
             <h3
               className="text-lg font-bold mb-5"
-              style={{ fontFamily: "'Syne', sans-serif", color: "#a5b4fc" }}
+              style={{  color: "var(--primary)" }}
             >
               My Story
             </h3>
-            <div className="space-y-4 text-slate-300 leading-relaxed text-[15px]">
+            <div className="space-y-4 text-foreground/80 leading-relaxed text-[15px]">
               <p>
-                I&apos;m a <strong className="text-white">Technical Lead at Myntra</strong> with
+                I&apos;m a <strong className="text-foreground">Technical Lead at Myntra</strong> with
                 6+ years of experience building web and mobile products at scale. I own the
                 full frontend of home, SIS, PLP, and PDP pages used by millions of shoppers
                 across India.
               </p>
               <p>
                 Before Myntra, I spent nearly four years at{" "}
-                <strong className="text-white">Codingmart Technologies</strong> as a Product
+                <strong className="text-foreground">Codingmart Technologies</strong> as a Product
                 Engineer — architecting backends, setting up CI/CD, and shipping full products
                 for early-stage startups.
               </p>
               <p>
                 Outside work, I run side projects under{" "}
-                <strong className="text-white">Deviza Labs</strong> — an AI-powered visa
+                <strong className="text-foreground">Deviza Labs</strong> — an AI-powered visa
                 planner and an LLM-based expense tracker. I also take freelance projects for
                 teams who need fast, high-performance web &amp; mobile apps.
               </p>
-              <p className="text-sm" style={{ color: "#a5b4fc" }}>
+              <p className="text-sm" style={{ color: "var(--primary)" }}>
                 React · React Native · Next.js · Node.js · GoLang · MongoDB · SQL
               </p>
             </div>
@@ -149,8 +147,8 @@ export default function About() {
               }}
               className="rounded-2xl p-6 cursor-default"
               style={{
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.06)",
+                background: "var(--card)",
+                border: "1px solid var(--border)",
                 transformStyle: "preserve-3d",
               }}
             >
@@ -158,12 +156,11 @@ export default function About() {
                 {card.icon}
               </div>
               <h3
-                className="font-bold mb-2 text-white"
-                style={{ fontFamily: "'Syne', sans-serif" }}
+                className="font-bold mb-2 text-foreground"
               >
                 {card.title}
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{card.desc}</p>
+              <p className="text-muted-foreground text-sm leading-relaxed">{card.desc}</p>
             </motion.div>
           ))}
         </div>

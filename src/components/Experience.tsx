@@ -59,12 +59,12 @@ export default function Experience() {
       id="experience"
       ref={ref}
       className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
-      style={{ backgroundColor: "#0d0d14" }}
+      style={{ backgroundColor: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}
     >
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
       />
 
       <div className="max-w-4xl mx-auto">
@@ -78,17 +78,15 @@ export default function Experience() {
         >
           <h2
             className="text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             Work{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+              className="text-primary"
             >
               Experience
             </span>
           </h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             6+ years of impact across product, scale, and performance.
           </p>
         </motion.div>
@@ -104,7 +102,7 @@ export default function Experience() {
             transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
             style={{
               background:
-                "linear-gradient(to bottom, #6366f1, #a855f7 50%, rgba(168,85,247,0.15))",
+                "linear-gradient(to bottom, var(--primary), var(--primary) 50%, color-mix(in srgb, var(--primary) 15%, transparent))",
               transformOrigin: "top",
             }}
           />
@@ -135,17 +133,17 @@ export default function Experience() {
                     <>
                       <span
                         className="absolute inline-block w-4 h-4 rounded-full animate-ping"
-                        style={{ backgroundColor: "rgba(99,102,241,0.4)" }}
+                        style={{ backgroundColor: "color-mix(in srgb, var(--primary) 40%, transparent)" }}
                       />
                       <span
                         className="relative inline-block w-3 h-3 rounded-full"
-                        style={{ backgroundColor: "#6366f1" }}
+                        style={{ backgroundColor: "var(--primary)" }}
                       />
                     </>
                   ) : (
                     <span
                       className="inline-block w-3 h-3 rounded-full"
-                      style={{ backgroundColor: "#475569" }}
+                      style={{ backgroundColor: "var(--muted-foreground)" }}
                     />
                   )}
                 </motion.div>
@@ -154,8 +152,8 @@ export default function Experience() {
                 <div
                   className="rounded-2xl overflow-hidden"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: `1px solid ${exp.current ? "rgba(99,102,241,0.25)" : "rgba(255,255,255,0.06)"}`,
+                    background: "var(--card)",
+                    border: `1px solid ${exp.current ? "color-mix(in srgb, var(--primary) 25%, transparent)" : "var(--border)"}`,
                   }}
                 >
                   {/* Header — always visible, acts as toggle */}
@@ -169,8 +167,7 @@ export default function Experience() {
                     <div className="flex-1 min-w-0">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <h3
-                          className="text-lg font-bold text-white"
-                          style={{ fontFamily: "'Syne', sans-serif" }}
+                          className="text-lg font-bold text-foreground"
                         >
                           {exp.role}
                         </h3>
@@ -178,28 +175,28 @@ export default function Experience() {
                           <span
                             className="px-2 py-0.5 rounded-full text-xs font-semibold"
                             style={{
-                              background: "rgba(99,102,241,0.15)",
-                              color: "#a5b4fc",
-                              border: "1px solid rgba(99,102,241,0.3)",
+                              background: "color-mix(in srgb, var(--primary) 15%, transparent)",
+                              color: "var(--primary)",
+                              border: "1px solid color-mix(in srgb, var(--primary) 30%, transparent)",
                             }}
                           >
                             Current
                           </span>
                         )}
                       </div>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-400">
-                        <span style={{ color: exp.current ? "#a5b4fc" : "#94a3b8" }}>
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                        <span style={{ color: exp.current ? "var(--primary)" : "var(--muted-foreground)" }}>
                           {exp.company}
                         </span>
-                        <span className="text-slate-600">·</span>
+                        <span className="text-muted-foreground">·</span>
                         <span>{exp.location}</span>
-                        <span className="text-slate-600">·</span>
+                        <span className="text-muted-foreground">·</span>
                         <span>{exp.period}</span>
                       </div>
                     </div>
                     <ChevronDown
                       size={18}
-                      className="mt-1 shrink-0 text-slate-500 transition-transform duration-300 group-hover:text-slate-300"
+                      className="mt-1 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:text-foreground"
                       style={{
                         transform: openIndex === index ? "rotate(180deg)" : "rotate(0deg)",
                       }}
@@ -222,20 +219,20 @@ export default function Experience() {
                         <div
                           className="px-6 pb-6"
                           style={{
-                            borderTop: "1px solid rgba(255,255,255,0.06)",
+                            borderTop: "1px solid var(--border)",
                           }}
                         >
-                          <p className="text-slate-400 text-sm leading-relaxed mt-4 mb-5">
+                          <p className="text-muted-foreground text-sm leading-relaxed mt-4 mb-5">
                             {exp.summary}
                           </p>
 
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
+                          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
                             Key Achievements
                           </h4>
                           <ul className="space-y-2 mb-6">
                             {exp.achievements.map((a, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                                <span className="mt-1 shrink-0" style={{ color: "#6366f1" }}>
+                              <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
+                                <span className="mt-1 shrink-0" style={{ color: "var(--primary)" }}>
                                   ▹
                                 </span>
                                 <span>{a}</span>
@@ -243,7 +240,7 @@ export default function Experience() {
                             ))}
                           </ul>
 
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
+                          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
                             Stack
                           </h4>
                           <div className="flex flex-wrap gap-2">
@@ -252,9 +249,9 @@ export default function Experience() {
                                 key={t}
                                 className="px-3 py-1 rounded-full text-xs font-medium"
                                 style={{
-                                  background: "rgba(99,102,241,0.1)",
-                                  border: "1px solid rgba(99,102,241,0.2)",
-                                  color: "#a5b4fc",
+                                  background: "color-mix(in srgb, var(--primary) 10%, transparent)",
+                                  border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
+                                  color: "var(--primary)",
                                 }}
                               >
                                 {t}

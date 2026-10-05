@@ -64,19 +64,19 @@ const PROJECTS: Project[] = [...OWN_PROJECTS, ...CLIENT_PROJECTS];
 
 const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
   Production: {
-    bg: "rgba(99,102,241,0.1)",
-    color: "#a5b4fc",
-    border: "rgba(99,102,241,0.25)",
+    bg: "color-mix(in srgb, var(--primary) 10%, transparent)",
+    color: "var(--primary)",
+    border: "color-mix(in srgb, var(--primary) 25%, transparent)",
   },
   Client: {
-    bg: "rgba(245,158,11,0.1)",
-    color: "#fcd34d",
-    border: "rgba(245,158,11,0.25)",
+    bg: "color-mix(in srgb, var(--primary) 10%, transparent)",
+    color: "var(--primary)",
+    border: "color-mix(in srgb, var(--primary) 25%, transparent)",
   },
   "Own Product": {
-    bg: "rgba(168,85,247,0.1)",
-    color: "#d8b4fe",
-    border: "rgba(168,85,247,0.25)",
+    bg: "var(--amber-bg)",
+    color: "var(--amber)",
+    border: "var(--amber-border)",
   },
 };
 
@@ -89,12 +89,12 @@ export default function Projects() {
       id="projects"
       ref={ref}
       className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
-      style={{ backgroundColor: "#0a0a0f" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
       />
 
       <div className="max-w-7xl mx-auto">
@@ -108,17 +108,15 @@ export default function Projects() {
         >
           <h2
             className="text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             Featured{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+              className="text-primary"
             >
               Projects
             </span>
           </h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             Products I built end to end, plus client and production work.
           </p>
         </motion.div>
@@ -141,20 +139,20 @@ export default function Projects() {
                 }}
                 className="group relative rounded-2xl flex flex-col overflow-hidden cursor-default"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
                   transformStyle: "preserve-3d",
                   willChange: "transform",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(99,102,241,0.28)";
+                    "color-mix(in srgb, var(--primary) 28%, transparent)";
                   (e.currentTarget as HTMLElement).style.boxShadow =
-                    "0 20px 60px rgba(99,102,241,0.15)";
+                    "var(--shadow-lg)";
                 }}
                 onMouseLeave={(e) => {
                   (e.currentTarget as HTMLElement).style.borderColor =
-                    "rgba(255,255,255,0.07)";
+                    "var(--border)";
                   (e.currentTarget as HTMLElement).style.boxShadow = "none";
                 }}
               >
@@ -168,9 +166,9 @@ export default function Projects() {
                       <span
                         className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
                         style={{
-                          background: "rgba(245,158,11,0.1)",
-                          color: "#f59e0b",
-                          border: "1px solid rgba(245,158,11,0.3)",
+                          background: "var(--amber-bg)",
+                          color: "var(--amber)",
+                          border: "1px solid var(--amber-border)",
                         }}
                       >
                         <Clock size={11} />
@@ -193,12 +191,11 @@ export default function Projects() {
                 {/* Body */}
                 <div className="p-6 flex flex-col flex-1 gap-4">
                   <h3
-                    className="text-lg font-bold text-white"
-                    style={{ fontFamily: "'Syne', sans-serif" }}
+                    className="text-lg font-bold text-foreground"
                   >
                     {project.title}
                   </h3>
-                  <p className="text-slate-400 text-sm leading-relaxed flex-1">
+                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                     {project.description}
                   </p>
 
@@ -209,9 +206,9 @@ export default function Projects() {
                         key={t}
                         className="px-2.5 py-1 rounded-full text-xs font-medium"
                         style={{
-                          background: "rgba(99,102,241,0.08)",
-                          border: "1px solid rgba(99,102,241,0.15)",
-                          color: "#a5b4fc",
+                          background: "color-mix(in srgb, var(--primary) 8%, transparent)",
+                          border: "1px solid color-mix(in srgb, var(--primary) 15%, transparent)",
+                          color: "var(--primary)",
                         }}
                       >
                         {t}
@@ -226,8 +223,8 @@ export default function Projects() {
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-white"
-                        style={{ color: "#a5b4fc" }}
+                        className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-foreground"
+                        style={{ color: "var(--primary)" }}
                         aria-label={`View ${project.title} live`}
                       >
                         <ExternalLink size={14} />
@@ -237,7 +234,7 @@ export default function Projects() {
                     {project.caseStudy && (
                       <Link
                         href={project.caseStudy}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-300 transition-colors duration-200 hover:text-white"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:text-foreground"
                         aria-label={`Read the ${project.title} case study`}
                       >
                         Case study

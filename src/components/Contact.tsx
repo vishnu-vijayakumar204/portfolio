@@ -22,10 +22,10 @@ const fadeUp = {
 };
 
 const inputBase =
-  "w-full px-4 py-3 rounded-xl text-slate-100 text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/50";
+  "w-full px-4 py-3 rounded-xl text-foreground text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/50";
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "var(--card)",
+  border: "1px solid var(--border)",
 };
 
 export default function Contact() {
@@ -62,12 +62,12 @@ export default function Contact() {
       id="contact"
       ref={ref}
       className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
-      style={{ backgroundColor: "#0d0d14" }}
+      style={{ backgroundColor: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}
     >
       <div
         aria-hidden="true"
         className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, rgba(99,102,241,0.4), transparent)" }}
+        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
       />
 
       <div className="max-w-6xl mx-auto">
@@ -81,17 +81,15 @@ export default function Contact() {
         >
           <h2
             className="text-4xl md:text-5xl font-extrabold mb-4"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
             Get In{" "}
             <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #6366f1, #a855f7)" }}
+              className="text-primary"
             >
               Touch
             </span>
           </h2>
-          <p className="text-slate-400 text-lg">
+          <p className="text-muted-foreground text-lg">
             Have a project? Let&apos;s talk about what you&apos;re building.
           </p>
         </motion.div>
@@ -107,12 +105,11 @@ export default function Contact() {
           >
             <div>
               <h3
-                className="text-xl font-bold text-white mb-3"
-                style={{ fontFamily: "'Syne', sans-serif" }}
+                className="text-xl font-bold text-foreground mb-3"
               >
                 Contact Information
               </h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 I&apos;m open to freelance projects, contract work, and
                 consulting. Fill in the form and I&apos;ll respond within 24
                 hours.
@@ -137,29 +134,29 @@ export default function Contact() {
                 key={label}
                 className="flex items-center gap-4 rounded-xl p-4"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "var(--card)",
+                  border: "1px solid var(--border)",
                 }}
               >
                 <div
                   className="p-2.5 rounded-lg shrink-0"
-                  style={{ background: "rgba(99,102,241,0.12)" }}
+                  style={{ background: "color-mix(in srgb, var(--primary) 12%, transparent)" }}
                 >
-                  <Icon size={18} style={{ color: "#a5b4fc" }} />
+                  <Icon size={18} style={{ color: "var(--primary)" }} />
                 </div>
                 <div>
-                  <p className="text-xs text-slate-500 font-medium uppercase tracking-wider mb-0.5">
+                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-0.5">
                     {label}
                   </p>
                   {href ? (
                     <a
                       href={href}
-                      className="text-slate-200 text-sm hover:text-indigo-400 transition-colors"
+                      className="text-foreground/80 text-sm hover:text-primary transition-colors"
                     >
                       {value}
                     </a>
                   ) : (
-                    <p className="text-slate-200 text-sm">{value}</p>
+                    <p className="text-foreground/80 text-sm">{value}</p>
                   )}
                 </div>
               </div>
@@ -169,12 +166,12 @@ export default function Contact() {
             <div
               className="rounded-xl p-4 flex items-center gap-3"
               style={{
-                background: "rgba(245,158,11,0.07)",
-                border: "1px solid rgba(245,158,11,0.2)",
+                background: "color-mix(in srgb, var(--primary) 7%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
               }}
             >
-              <span className="w-2.5 h-2.5 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: "#f59e0b" }} />
-              <p className="text-sm" style={{ color: "#fcd34d" }}>
+              <span className="w-2.5 h-2.5 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: "var(--primary)" }} />
+              <p className="text-sm" style={{ color: "var(--primary)" }}>
                 Currently available for freelance projects.
               </p>
             </div>
@@ -190,7 +187,7 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <div className="grid sm:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="name" className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                  <label htmlFor="name" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                     Name
                   </label>
                   <input
@@ -206,7 +203,7 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                  <label htmlFor="email" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                     Email
                   </label>
                   <input
@@ -224,7 +221,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="subject" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                   Subject
                 </label>
                 <input
@@ -241,7 +238,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="budget" className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="budget" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                   Budget
                 </label>
                 <select
@@ -250,13 +247,13 @@ export default function Contact() {
                   value={form.budget}
                   onChange={handleChange}
                   className={inputBase}
-                  style={{ ...inputStyle, color: form.budget ? "#f1f5f9" : "#64748b" }}
+                  style={{ ...inputStyle, color: form.budget ? "var(--foreground)" : "var(--muted-foreground)" }}
                 >
-                  <option value="" disabled style={{ color: "#64748b", background: "#0d0d14" }}>
+                  <option value="" disabled style={{ color: "var(--muted-foreground)", background: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}>
                     Select budget range
                   </option>
                   {BUDGET_OPTIONS.map((opt) => (
-                    <option key={opt} value={opt} style={{ background: "#0d0d14", color: "#f1f5f9" }}>
+                    <option key={opt} value={opt} style={{ background: "color-mix(in srgb, var(--muted) 50%, var(--background))", color: "var(--foreground)" }}>
                       {opt}
                     </option>
                   ))}
@@ -264,7 +261,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
+                <label htmlFor="message" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
                   Message
                 </label>
                 <textarea
@@ -282,10 +279,10 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl font-semibold text-white flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
+                className="w-full py-3.5 rounded-xl font-semibold text-primary-foreground flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
                 style={{
-                  background: "linear-gradient(135deg, #6366f1, #a855f7)",
-                  boxShadow: "0 0 20px rgba(99,102,241,0.2)",
+                  background: "var(--primary)",
+                  boxShadow: "var(--shadow-lg)",
                 }}
               >
                 Send Message

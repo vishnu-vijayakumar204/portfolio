@@ -78,6 +78,20 @@ function ParticleField() {
     const particles: Particle[] = [];
     let animId = 0;
 
+    // Canvas can't resolve CSS variables, so read the theme's primary colour
+    // directly and refresh it whenever the theme class on <html> changes.
+    const readColor = () =>
+      getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() ||
+      "#256bf7";
+    let color = readColor();
+    const observer = new MutationObserver(() => {
+      color = readColor();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
     const resize = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -109,7 +123,8 @@ function ParticleField() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(99,102,241,${p.alpha})`;
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = color;
         ctx.fill();
       }
 
@@ -122,7 +137,8 @@ function ParticleField() {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(99,102,241,${0.07 * (1 - dist / 100)})`;
+            ctx.globalAlpha = 0.07 * (1 - dist / 100);
+            ctx.strokeStyle = color;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -136,6 +152,7 @@ function ParticleField() {
     return () => {
       window.removeEventListener("resize", resize);
       cancelAnimationFrame(animId);
+      observer.disconnect();
     };
   }, []);
 
@@ -186,7 +203,7 @@ export default function Hero() {
       id="hero"
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden scroll-mt-0"
-      style={{ backgroundColor: "#0a0a0f" }}
+      style={{ backgroundColor: "var(--background)" }}
     >
       {/* Grid overlay */}
       <div
@@ -194,8 +211,8 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(99,102,241,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(99,102,241,0.035) 1px, transparent 1px)
+            linear-gradient(color-mix(in srgb, var(--primary) 3.5%, transparent) 1px, transparent 1px),
+            linear-gradient(90deg, color-mix(in srgb, var(--primary) 3.5%, transparent) 1px, transparent 1px)
           `,
           backgroundSize: "60px 60px",
         }}
@@ -208,7 +225,7 @@ export default function Hero() {
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute -top-60 -left-60 w-[700px] h-[700px] rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(circle, rgba(99,102,241,0.18), transparent 65%)",
+            background: "radial-gradient(circle, color-mix(in srgb, var(--primary) 18%, transparent), transparent 65%)",
           }}
         />
         <motion.div
@@ -216,7 +233,7 @@ export default function Hero() {
           transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute -bottom-60 -right-60 w-[700px] h-[700px] rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(circle, rgba(168,85,247,0.14), transparent 65%)",
+            background: "radial-gradient(circle, color-mix(in srgb, var(--primary) 14%, transparent), transparent 65%)",
           }}
         />
         <motion.div
@@ -224,7 +241,7 @@ export default function Hero() {
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] rounded-full blur-3xl"
           style={{
-            background: "radial-gradient(ellipse, rgba(245,158,11,0.06), transparent 60%)",
+            background: "radial-gradient(ellipse, color-mix(in srgb, var(--primary) 6%, transparent), transparent 60%)",
           }}
         />
       </div>
@@ -252,12 +269,12 @@ export default function Hero() {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full text-sm font-medium"
             style={{
-              border: "1px solid rgba(245,158,11,0.35)",
-              backgroundColor: "rgba(245,158,11,0.07)",
-              color: "#f59e0b",
+              border: "1px solid color-mix(in srgb, var(--primary) 35%, transparent)",
+              backgroundColor: "color-mix(in srgb, var(--primary) 7%, transparent)",
+              color: "var(--primary)",
             }}
           >
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             Available for freelance projects
           </motion.div>
 
@@ -267,14 +284,10 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.6 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight tracking-tight"
-            style={{ fontFamily: "'Syne', sans-serif" }}
           >
-            <span className="text-white">Vishnu </span>
+            <span className="text-foreground">Vishnu </span>
             <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #f59e0b 100%)",
-              }}
+              className="text-primary"
             >
               Vijayakumar
             </span>
@@ -286,12 +299,12 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.45, duration: 0.5 }}
             className="text-xl sm:text-2xl font-semibold mb-5 h-9 flex items-center justify-center gap-1"
-            style={{ color: "#a5b4fc" }}
+            style={{ color: "var(--primary)" }}
           >
             <span>{role}</span>
             <span
               className="inline-block w-0.5 h-6 animate-pulse"
-              style={{ backgroundColor: "#6366f1" }}
+              style={{ backgroundColor: "var(--primary)" }}
             />
           </motion.div>
 
@@ -300,7 +313,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.55, duration: 0.5 }}
-            className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto mb-9 leading-relaxed"
+            className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto mb-9 leading-relaxed"
           >
             6+ years building high-performance web &amp; mobile products at scale.
             Currently Technical Lead at Myntra, shipping for millions.
@@ -315,10 +328,10 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="px-7 py-3 rounded-full font-semibold text-white transition-all duration-200 hover:scale-105"
+              className="px-7 py-3 rounded-full font-semibold text-primary-foreground transition-all duration-200 hover:scale-105"
               style={{
-                background: "linear-gradient(135deg, #6366f1, #a855f7)",
-                boxShadow: "0 0 32px rgba(99,102,241,0.35)",
+                background: "var(--primary)",
+                boxShadow: "var(--shadow-lg)",
               }}
             >
               View My Work
@@ -327,9 +340,9 @@ export default function Hero() {
               href="#contact"
               className="px-7 py-3 rounded-full font-semibold transition-all duration-200 hover:scale-105"
               style={{
-                border: "1px solid rgba(245,158,11,0.45)",
-                color: "#f59e0b",
-                backgroundColor: "rgba(245,158,11,0.06)",
+                border: "1px solid color-mix(in srgb, var(--primary) 45%, transparent)",
+                color: "var(--primary)",
+                backgroundColor: "color-mix(in srgb, var(--primary) 6%, transparent)",
               }}
             >
               Start a Project
@@ -347,7 +360,7 @@ export default function Hero() {
               href="https://github.com/vishnu-vijayakumar204"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-white transition-colors duration-200"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               aria-label="GitHub profile"
             >
               <Github size={22} />
@@ -356,14 +369,14 @@ export default function Hero() {
               href="https://www.linkedin.com/in/vishnu-vijayakumar-0529b3162"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-500 hover:text-white transition-colors duration-200"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               aria-label="LinkedIn profile"
             >
               <Linkedin size={22} />
             </a>
             <a
               href="mailto:vishnu.vijayakumar204@gmail.com"
-              className="text-slate-500 hover:text-white transition-colors duration-200"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               aria-label="Send email"
             >
               <Mail size={22} />
@@ -377,7 +390,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
-          className="flex flex-col items-center gap-2 text-slate-600 hover:text-slate-400 transition-colors"
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-muted-foreground transition-colors"
           aria-label="Scroll to about section"
         >
           <span className="text-xs tracking-widest uppercase">Scroll</span>
