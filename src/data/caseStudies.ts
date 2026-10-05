@@ -10,6 +10,8 @@
 export interface CaseStudy {
   slug: string;
   title: string;
+  /** Still being built: shown with a WIP badge. */
+  wip?: boolean;
   category: string;
   emoji: string;
   /** One sentence: what the product is. */
@@ -68,7 +70,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     outcomes: [
       "A live production site with a programmatic guide system built to cover roughly 40,000 origin/destination pairs.",
-      "TODO: Add real numbers you're comfortable sharing: monthly visitors, indexed pages, paid itineraries, Lighthouse scores.",
     ],
     whyItMatters:
       "A full product, shipped and operated by one engineer: SEO at scale, an AI content pipeline, payments, email and analytics. It's the same loop I run for clients: scope it, build it, ship it, then tune it.",
@@ -76,10 +77,11 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "expense-tracker",
     title: "Deviza Expense Tracker",
+    wip: true,
     category: "AI-powered SaaS (web + mobile)",
     emoji: "💰",
     whatItIs:
-      "An expense tracker where you log spending in plain language, in the web app, on Telegram or WhatsApp, or in a native mobile app. AI turns each message into categorised transactions.",
+      "An expense tracker where you log spending in plain language, in the web app or on Telegram or WhatsApp, with a native mobile app in development. AI turns each message into categorised transactions.",
     liveUrl: "https://expenses.devizalabs.com",
     tech: [
       "Next.js",
@@ -101,7 +103,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Chat integrations: Telegram and WhatsApp webhooks with account linking.",
       "Subscriptions across three billing providers (Razorpay, Lemon Squeezy and RevenueCat for mobile), all via idempotent, signature-verified webhooks.",
       "Versioned REST API with bearer-token auth and per-user rate limiting (Upstash) for the mobile client.",
-      "Offline-first mobile: writes queue in an on-device SQLite outbox and replay in order when the connection returns.",
+      "Mobile app (in development, Expo): offline-first writes queue in an on-device SQLite outbox and replay in order when the connection returns.",
       "Dashboards and insights: charts, budgets, recurring transactions, collections, AI insight summaries, export, installable PWA. Sentry for error tracking, Vitest tests and GitHub Actions CI.",
     ],
     decisions: [
@@ -110,8 +112,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Only queue offline the writes that are safe to replay (edits and collection changes on rows the user owns). Anything gated by a server-side quota check, like AI parsing, shows \"you're offline\" instead of queueing.",
     ],
     outcomes: [
-      "One codebase of business logic serving a web app, chat bots and a native app.",
-      "TODO: Add real numbers you're comfortable sharing: users, messages parsed, parse accuracy, MRR. Also say whether the mobile app is on the stores yet.",
+      "A production-hardened web app with chat bots and subscription billing, built on shared business logic that the in-development mobile app reuses.",
     ],
     whyItMatters:
       "A multi-platform SaaS with real money flowing through it: auth, billing, AI, webhooks, offline sync and an API. This is what 'give me the problem and I'll ship the thing' looks like.",
@@ -141,7 +142,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     whatIDid: [
       "Designed the system end to end: data model, API, public site, admin dashboard and deployment.",
       "Public site: browsable race lists per sport, filters, race detail pages with distances, pricing, schedules and registration status, and SEO with dynamic OpenGraph images.",
-      "Human-in-the-loop pipeline: an external AI discovery and enrichment routine posts candidates through a bearer-token API, and a curator reviews them in an admin dashboard (pending, approved, rejected, needs review, unreachable, past).",
+      "Human-in-the-loop pipeline: scheduled AI routines run daily by region, search for races and post verified candidates through a bearer-token API. A second daily routine re-checks approved races against their live pages and flags changes. A curator reviews everything in an admin dashboard (pending, approved, rejected, needs review, unreachable, past).",
       "Postgres schema with Drizzle: races, categories, editions, schedule items, sources, edits, subscribers, alert deliveries and sponsor requests, managed with versioned migrations.",
       "Admin: Auth.js-protected, with approval workflow, race editing, duplicate detection and merging, analytics and subscriber management.",
       "Email alerts for subscribers through Resend, and click and view tracking for organisers and sponsors.",
@@ -150,11 +151,10 @@ export const CASE_STUDIES: CaseStudy[] = [
     decisions: [
       "Drizzle over Prisma for plain-SQL performance and no query-engine cold start on serverless.",
       "AI proposes, a human approves: nothing from the discovery routine goes public until reviewed. The rules for it are strict (never guess; omit unknown fields), so data quality stays high.",
-      "Kept the discovery logic outside the web app. The app only exposes the API that receives results, so the scraper can change without touching the product.",
+      "Kept the discovery logic outside the web app. The app only exposes the API that receives results, so the routines can change without touching the product. Pages that change or go dead are flagged for human review rather than silently updated.",
     ],
     outcomes: [
       "A live product covering five sports with a working curation pipeline and monetisation hooks (sponsorships and featured listings).",
-      "TODO: Add real numbers: races listed, monthly visitors, subscribers, sponsors.",
     ],
     whyItMatters:
       "Shows I can build a two-sided data product: a public site for users, an operational back office for a curator, and an API for an AI pipeline, designed around data quality, not just UI.",

@@ -53,6 +53,7 @@ const OWN_PROJECTS: Project[] = PUBLISHED_STUDIES.map((c) => ({
   emoji: c.emoji,
   title: c.title,
   tag: "Own Product",
+  wip: c.wip,
   description: c.whatItIs,
   tech: c.tech,
   liveUrl: c.liveUrl,

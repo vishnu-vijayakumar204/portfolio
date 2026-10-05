@@ -209,6 +209,18 @@ export default function WorkWithMe() {
                 <div>
                   <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "#a5b4fc" }}>
                     {isTodo(c.category) ? "In progress" : c.category}
+                    {c.wip && (
+                      <span
+                        className="ml-3 px-2 py-0.5 rounded-full text-[10px] font-semibold align-middle"
+                        style={{
+                          background: "rgba(245,158,11,0.1)",
+                          color: "#f59e0b",
+                          border: "1px solid rgba(245,158,11,0.3)",
+                        }}
+                      >
+                        WIP
+                      </span>
+                    )}
                   </p>
                   <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>
                     {c.emoji} {c.title}
