@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
+import { track } from "@vercel/analytics";
 import { EMAIL } from "@/lib/site";
 
 const HELP_OPTIONS = [
@@ -49,6 +50,9 @@ export default function Contact({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) 
       form.building,
     ].join("\n");
     window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    try {
+      track("contact_submit", { help: form.help, timeline: form.timeline });
+    } catch {}
     setSent(true);
   };
 

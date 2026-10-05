@@ -72,16 +72,17 @@ export function ButtonLink({
       ? `${BUTTON_BASE} bg-primary text-primary-foreground shadow-lg hover:-translate-y-0.5 hover:shadow-xl`
       : `${BUTTON_BASE} border border-border text-foreground hover:border-primary hover:text-primary`;
   const cls = `${style} ${className}`;
+  const track = { "data-track": external ? "external_product_click" : "cta_click", "data-track-label": href };
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+      <a href={href} target="_blank" rel="noopener noreferrer" className={cls} {...track}>
         {children}
         <ArrowUpRight size={16} aria-hidden="true" />
       </a>
     );
   }
   return (
-    <Link href={href} className={cls}>
+    <Link href={href} className={cls} {...track}>
       {children}
     </Link>
   );

@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { JsonLd, siteGraph, personSchema, websiteSchema } from "@/lib/jsonld";
 
@@ -60,6 +61,7 @@ export default function RootLayout({
         <Navbar />
         <main id="main">{children}</main>
         <Footer />
+        <AnalyticsEvents />
       </body>
     </html>
   );

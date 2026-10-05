@@ -96,7 +96,7 @@ export default function Services() {
             I take on a small number of part-time freelance and contract projects. Tell me what you&apos;re building.
           </p>
           <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
-            <Link href="#contact" className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+            <Link href="#contact" data-track="cta_click" data-track-label="services-banner" className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
               Start a project
             </Link>
             <Link href="/freelance" className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-7 py-3 font-semibold text-foreground transition-colors hover:border-primary hover:text-primary">

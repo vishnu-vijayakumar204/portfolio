@@ -73,6 +73,8 @@ export default function Navbar() {
             <ThemeToggle />
             <Link
               href={CTA_HREF}
+              data-track="cta_click"
+              data-track-label="navbar"
               className="hidden items-center rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary md:inline-flex"
             >
               {CTA_LABEL}
@@ -106,6 +108,8 @@ export default function Navbar() {
             ))}
             <Link
               href={CTA_HREF}
+              data-track="cta_click"
+              data-track-label="navbar"
               onClick={() => setMobileOpen(false)}
               className="mt-3 inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
             >

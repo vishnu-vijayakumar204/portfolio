@@ -103,7 +103,7 @@ export default function ServicePageView({ page }: { page: ServicePage }) {
                 <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-primary">{c!.category}</p>
                 <h3 className="mb-2 text-lg font-bold text-foreground">{c!.title}</h3>
                 <p className="mb-4 flex-1 text-sm leading-relaxed text-muted-foreground">{c!.whatItIs}</p>
-                <Link href={caseStudyPath(c!.slug)} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+                <Link href={caseStudyPath(c!.slug)} data-track="project_click" data-track-label={c!.title} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
                   Read the case study <ArrowRight size={14} aria-hidden="true" />
                 </Link>
               </Card>

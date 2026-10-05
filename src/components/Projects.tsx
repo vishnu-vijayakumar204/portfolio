@@ -76,6 +76,8 @@ export default function Projects() {
                   href={p.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-track="external_product_click"
+                  data-track-label={p.title}
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                   aria-label={`View ${p.title} live (opens in a new tab)`}
                 >
@@ -83,6 +85,8 @@ export default function Projects() {
                 </a>
                 <Link
                   href={caseStudyPath(p.slug)}
+                  data-track="project_click"
+                  data-track-label={p.title}
                   className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-foreground"
                   aria-label={`Read the ${p.title} case study`}
                 >
@@ -135,6 +139,8 @@ export default function Projects() {
                       href={w.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-track="external_product_click"
+                      data-track-label={w.title}
                       className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
                       aria-label={`View ${w.title} live (opens in a new tab)`}
                     >
@@ -144,6 +150,8 @@ export default function Projects() {
                   {w.caseStudy && (
                     <Link
                       href={w.caseStudy}
+                      data-track="project_click"
+                      data-track-label={w.title}
                       className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-foreground"
                       aria-label={`Read the ${w.title} case study`}
                     >
