@@ -1,251 +1,167 @@
-"use client";
-
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
 import Link from "next/link";
-import { ExternalLink, Clock, ArrowRight } from "lucide-react";
-import { PUBLISHED_STUDIES } from "@/data/caseStudies";
+import { ArrowRight, ArrowUpRight, Clock } from "lucide-react";
+import { OWN_PRODUCTS, CLIENT_WORK, caseStudyPath } from "@/data/caseStudies";
 
-type Tag = "Own Product" | "Production" | "Client";
-
-interface Project {
-  emoji: string;
-  title: string;
-  tag: Tag;
-  wip?: boolean;
-  description: string;
-  tech: string[];
-  liveUrl?: string;
-  caseStudy?: string;
-}
-
-const CLIENT_PROJECTS: Project[] = [
-  {
-    emoji: "🎮",
-    title: "Fanspace",
-    tag: "Production",
-    description:
-      "Indian e-sports fan engagement platform by Esports Collective — news, stats, tournaments. Built the Display page and bridged website modules with webview.",
-    tech: ["React Native", "MobX"],
-  },
-  {
-    emoji: "💼",
-    title: "Technomanagers.in",
-    tag: "Client",
-    description:
-      "Migrated from Lovable to Next.js with full SEO overhaul — structured data, sitemap, robots, og:image, and Core Web Vitals improvements.",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
-    liveUrl: "https://technomanagers.in",
-  },
-  {
-    emoji: "🍹",
-    title: "House of 30ML",
-    tag: "Client",
-    description:
-      "Bar-hopping platform live in Pune — full-stack build with React Native + React web. Architected the entire frontend and collaborated directly with the founder.",
-    tech: ["React Native", "React", "Node.js"],
-    liveUrl: "https://www.houseof30ml.in/",
-  },
-];
-
-// The products I built myself: each links to its case study.
-const OWN_PROJECTS: Project[] = PUBLISHED_STUDIES.map((c) => ({
-  emoji: c.emoji,
-  title: c.title,
-  tag: "Own Product",
-  wip: c.wip,
-  description: c.whatItIs,
-  tech: c.tech,
-  liveUrl: c.liveUrl,
-  caseStudy: `/work/${c.slug}`,
-}));
-
-const PROJECTS: Project[] = [...OWN_PROJECTS, ...CLIENT_PROJECTS];
-
-const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
-  Production: {
-    bg: "color-mix(in srgb, var(--primary) 10%, transparent)",
-    color: "var(--primary)",
-    border: "color-mix(in srgb, var(--primary) 25%, transparent)",
-  },
-  Client: {
-    bg: "color-mix(in srgb, var(--primary) 10%, transparent)",
-    color: "var(--primary)",
-    border: "color-mix(in srgb, var(--primary) 25%, transparent)",
-  },
-  "Own Product": {
-    bg: "var(--amber-bg)",
-    color: "var(--amber)",
-    border: "var(--amber-border)",
-  },
-};
+const LABEL = "mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground";
 
 export default function Projects() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section
       id="projects"
-      ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
+      className="relative scroll-mt-20 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
       style={{ backgroundColor: "var(--background)" }}
     >
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
-      />
-
-      <div className="max-w-7xl mx-auto">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, rotateX: 18 }}
-          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ transformPerspective: 800 }}
-          className="text-center mb-14"
-        >
-          <h2
-            className="text-4xl md:text-5xl font-extrabold mb-4"
-          >
-            Featured{" "}
-            <span
-              className="text-primary"
-            >
-              Projects
-            </span>
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <h2 className="mb-4 text-4xl font-extrabold md:text-5xl">
+            Featured <span className="text-primary">Projects</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            Products I built end to end, plus client and production work.
+          <p className="text-lg text-muted-foreground">
+            I don&apos;t just code tickets. I can take a product from idea to production. These three I
+            built and shipped myself, under Deviza Labs.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Grid with perspective for 3D child effects */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" style={{ perspective: "1200px" }}>
-          {PROJECTS.map((project, index) => {
-            const tagStyle = TAG_STYLES[project.tag];
-            return (
-              <motion.article
-                key={project.title}
-                initial={{ opacity: 0, y: 32 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: index * 0.09 }}
-                whileHover={{
-                  scale: 1.03,
-                  rotateX: -3,
-                  rotateY: 4,
-                  transition: { type: "spring", stiffness: 250, damping: 18 },
-                }}
-                className="group relative rounded-2xl flex flex-col overflow-hidden cursor-default"
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid var(--border)",
-                  transformStyle: "preserve-3d",
-                  willChange: "transform",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "color-mix(in srgb, var(--primary) 28%, transparent)";
-                  (e.currentTarget as HTMLElement).style.boxShadow =
-                    "var(--shadow-lg)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor =
-                    "var(--border)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                }}
-              >
-                {/* Top row */}
-                <div className="p-6 pb-0 flex items-start justify-between gap-3">
-                  <span className="text-4xl" role="img" aria-label={project.title}>
-                    {project.emoji}
-                  </span>
-                  <div className="flex items-center gap-2 mt-1 flex-wrap justify-end">
-                    {project.wip && (
-                      <span
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
-                        style={{
-                          background: "var(--amber-bg)",
-                          color: "var(--amber)",
-                          border: "1px solid var(--amber-border)",
-                        }}
-                      >
-                        <Clock size={11} />
-                        WIP
-                      </span>
-                    )}
-                    <span
-                      className="px-2.5 py-1 rounded-full text-xs font-semibold"
-                      style={{
-                        background: tagStyle.bg,
-                        color: tagStyle.color,
-                        border: `1px solid ${tagStyle.border}`,
-                      }}
-                    >
-                      {project.tag}
+        {/* Own products */}
+        <div className="grid gap-6 lg:grid-cols-3">
+          {OWN_PRODUCTS.map((p) => (
+            <article
+              key={p.slug}
+              className="flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+            >
+              <div className="mb-4 flex items-start justify-between gap-3">
+                <span className="text-4xl" aria-hidden="true">{p.emoji}</span>
+                <div className="flex flex-wrap justify-end gap-2">
+                  {p.wip && (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--amber-border)] bg-[var(--amber-bg)] px-2.5 py-1 text-xs font-semibold text-[var(--amber)]">
+                      <Clock size={11} aria-hidden="true" /> WIP
                     </span>
-                  </div>
+                  )}
+                  <span className="rounded-full border border-[var(--amber-border)] bg-[var(--amber-bg)] px-2.5 py-1 text-xs font-semibold text-[var(--amber)]">
+                    Own Product
+                  </span>
                 </div>
+              </div>
 
-                {/* Body */}
-                <div className="p-6 flex flex-col flex-1 gap-4">
-                  <h3
-                    className="text-lg font-bold text-foreground"
-                  >
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-                    {project.description}
-                  </p>
+              <h3 className="mb-1 text-xl font-bold text-foreground">{p.title}</h3>
+              <p className="mb-4 text-xs font-medium text-primary">{p.category}</p>
 
-                  {/* Tech pills */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="px-2.5 py-1 rounded-full text-xs font-medium"
-                        style={{
-                          background: "color-mix(in srgb, var(--primary) 8%, transparent)",
-                          border: "1px solid color-mix(in srgb, var(--primary) 15%, transparent)",
-                          color: "var(--primary)",
-                        }}
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Links */}
-                  <div className="mt-auto flex items-center gap-5">
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-foreground"
-                        style={{ color: "var(--primary)" }}
-                        aria-label={`View ${project.title} live`}
-                      >
-                        <ExternalLink size={14} />
-                        View live
-                      </a>
-                    )}
-                    {project.caseStudy && (
-                      <Link
-                        href={project.caseStudy}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-foreground/80 transition-colors duration-200 hover:text-foreground"
-                        aria-label={`Read the ${project.title} case study`}
-                      >
-                        Case study
-                        <ArrowRight size={14} />
-                      </Link>
-                    )}
-                  </div>
+              <div className="mb-4 flex-1 space-y-3 text-sm leading-relaxed">
+                <div>
+                  <p className={LABEL}>What it does</p>
+                  <p className="text-muted-foreground">{p.whatItIs}</p>
                 </div>
-              </motion.article>
-            );
-          })}
+                {p.cardBuilt && (
+                  <div>
+                    <p className={LABEL}>What I built</p>
+                    <p className="text-muted-foreground">{p.cardBuilt}</p>
+                  </div>
+                )}
+                {p.cardDecision && (
+                  <div>
+                    <p className={LABEL}>Key decision</p>
+                    <p className="text-muted-foreground">{p.cardDecision}</p>
+                  </div>
+                )}
+              </div>
+
+              <ul className="mb-5 flex flex-wrap gap-2" aria-label={`${p.title} technologies`}>
+                {p.tech.map((t) => (
+                  <li key={t} className="rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{t}</li>
+                ))}
+              </ul>
+
+              <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1">
+                <a
+                  href={p.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-track="external_product_click"
+                  data-track-label={p.title}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                  aria-label={`View ${p.title} live (opens in a new tab)`}
+                >
+                  View live <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
+                <Link
+                  href={caseStudyPath(p.slug)}
+                  data-track="project_click"
+                  data-track-label={p.title}
+                  className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-foreground"
+                  aria-label={`Read the ${p.title} case study`}
+                >
+                  Case study <ArrowRight size={14} aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* Client work */}
+        <div className="mt-16">
+          <h3 className="mb-2 text-2xl font-extrabold">Client work</h3>
+          <p className="mb-8 text-muted-foreground">Problem, what I did, technology, outcome.</p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CLIENT_WORK.map((w) => (
+              <article
+                key={w.title}
+                className="flex flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+              >
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="text-3xl" aria-hidden="true">{w.emoji}</span>
+                  <h4 className="text-lg font-bold text-foreground">{w.title}</h4>
+                </div>
+                <dl className="mb-4 flex-1 space-y-3 text-sm leading-relaxed">
+                  {w.problem && (
+                    <div>
+                      <dt className={LABEL}>Problem</dt>
+                      <dd className="text-muted-foreground">{w.problem}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt className={LABEL}>What I did</dt>
+                    <dd className="text-muted-foreground">{w.whatIDid}</dd>
+                  </div>
+                  <div>
+                    <dt className={LABEL}>Technology</dt>
+                    <dd className="text-muted-foreground">{w.tech.join(" · ")}</dd>
+                  </div>
+                  {w.outcome && (
+                    <div>
+                      <dt className={LABEL}>Outcome</dt>
+                      <dd className="text-muted-foreground">{w.outcome}</dd>
+                    </div>
+                  )}
+                </dl>
+                <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-1">
+                  {w.liveUrl && (
+                    <a
+                      href={w.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-track="external_product_click"
+                      data-track-label={w.title}
+                      className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+                      aria-label={`View ${w.title} live (opens in a new tab)`}
+                    >
+                      View live <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  )}
+                  {w.caseStudy && (
+                    <Link
+                      href={w.caseStudy}
+                      data-track="project_click"
+                      data-track-label={w.title}
+                      className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-foreground/80 hover:text-foreground"
+                      aria-label={`Read the ${w.title} case study`}
+                    >
+                      Case study <ArrowRight size={14} aria-hidden="true" />
+                    </Link>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

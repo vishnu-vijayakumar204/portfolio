@@ -28,6 +28,21 @@ export interface CaseStudy {
   outcomes: string[];
   /** The "why this matters" line for a prospective client. */
   whyItMatters: string;
+  /** <title> and meta description for the case-study page (kept search-snippet length). */
+  metaTitle: string;
+  metaDescription: string;
+  /** Short "what I built" line for cards. */
+  cardBuilt?: string;
+  /** Short "key decision" line for cards. */
+  cardDecision?: string;
+  /** Performance / SEO facts, only where they exist. */
+  seo?: string[];
+  /** Whether this was an own product or client work. */
+  kind: "own" | "client";
+  /** The service page this case study backs up. */
+  service: { href: string; label: string };
+  /** Other service pages worth linking from the case study. */
+  related?: { href: string; label: string }[];
 }
 
 export const isTodo = (s: string) => s.trim().startsWith("TODO:");
@@ -35,6 +50,20 @@ export const isTodo = (s: string) => s.trim().startsWith("TODO:");
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "travelvisastack",
+    metaTitle: "TravelVisaStack Case Study",
+    metaDescription:
+      "Case study: TravelVisaStack, a visa-requirements checker with AI-generated guides and paid trip itineraries, built end to end on Next.js, Supabase and Gemini.",
+    kind: "own",
+    service: { href: "/nextjs-developer", label: "Next.js development" },
+    related: [{ href: "/seo-nextjs", label: "Next.js SEO" }],
+    cardBuilt:
+      "The whole product: UI, API routes, database, AI content pipeline, payments and deployment.",
+    cardDecision:
+      "Pre-generates visa guides in scheduled AI batches instead of scraping government sites.",
+    seo: [
+      "Programmatic SEO: server-rendered guide pages for origin/destination country pairs, plus hub pages and a sitemap.",
+      "Pages are revalidated weekly (ISR), so content stays fresh without a rebuild on every request.",
+    ],
     title: "TravelVisaStack",
     category: "AI travel platform",
     emoji: "✈️",
@@ -76,6 +105,16 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "expense-tracker",
+    metaTitle: "Deviza Expense Tracker Case Study",
+    metaDescription:
+      "Case study: an AI-powered expense tracker you talk to on web, Telegram and WhatsApp, built as a Next.js and Expo monorepo with shared logic.",
+    kind: "own",
+    service: { href: "/react-native-developer", label: "React Native development" },
+    related: [{ href: "/nextjs-developer", label: "Next.js development" }],
+    cardBuilt:
+      "A pnpm monorepo: Next.js web app, Expo mobile app, shared business logic, AI parsing, chat bots and billing.",
+    cardDecision:
+      "One shared AI-parsing package, so web, Telegram and mobile cannot drift apart.",
     title: "Deviza Expense Tracker",
     wip: true,
     category: "AI-powered SaaS (web + mobile)",
@@ -119,6 +158,18 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "compete",
+    metaTitle: "Compete Case Study",
+    metaDescription:
+      "Case study: Compete, a race-discovery platform for India with a human-in-the-loop AI pipeline and curator dashboard, built on Next.js and Postgres.",
+    kind: "own",
+    service: { href: "/nextjs-developer", label: "Next.js development" },
+    related: [{ href: "/seo-nextjs", label: "Next.js SEO" }],
+    cardBuilt:
+      "Public race site, curator dashboard, Postgres schema and the API that an AI discovery pipeline posts to.",
+    cardDecision: "AI proposes, a human approves: nothing goes public until reviewed.",
+    seo: [
+      "Race detail pages with dynamic OpenGraph images, per-sport browse pages and filters.",
+    ],
     title: "Compete",
     category: "Data aggregation platform",
     emoji: "🏆",
@@ -159,20 +210,93 @@ export const CASE_STUDIES: CaseStudy[] = [
     whyItMatters:
       "Shows I can build a two-sided data product: a public site for users, an operational back office for a curator, and an API for an AI pipeline, designed around data quality, not just UI.",
   },
+  {
+    slug: "technomanagers-nextjs-migration",
+    metaTitle: "Technomanagers Next.js Migration Case Study",
+    metaDescription:
+      "Case study: migrating the Technomanagers site from Lovable to Next.js with an SEO overhaul: structured data, sitemap, robots, OG images and Core Web Vitals.",
+    kind: "client",
+    title: "Technomanagers: Lovable to Next.js migration",
+    category: "Client work · Next.js migration & SEO",
+    emoji: "💼",
+    service: { href: "/seo-nextjs", label: "Next.js SEO and migrations" },
+    related: [
+      { href: "/nextjs-developer", label: "Next.js development" },
+      { href: "/performance", label: "Performance engineering" },
+    ],
+    whatItIs:
+      "A client site for Technomanagers, originally built with Lovable, migrated to Next.js with an SEO overhaul.",
+    liveUrl: "https://technomanagers.in",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
+    problem:
+      "The site had been built with Lovable and needed a Next.js foundation, plus the technical SEO groundwork that helps a business site get found.",
+    whatIDid: [
+      "Migrated the site from Lovable to Next.js.",
+      "Added structured data (JSON-LD), a sitemap and a robots file.",
+      "Set up og:image so shared links render properly.",
+      "Worked on Core Web Vitals improvements as part of the migration.",
+    ],
+    decisions: [
+      "Next.js gives the site server-rendered HTML and first-class metadata, sitemap and robots support, which is the foundation technical SEO is built on.",
+    ],
+    seo: [
+      "Structured data, sitemap, robots and og:image all added as part of the migration.",
+      "Core Web Vitals improvements.",
+      "TODO: add before/after Lighthouse or Search Console numbers once the client agrees to publish them.",
+    ],
+    outcomes: [
+      "The site is live on Next.js with structured data, a sitemap, robots and OG images in place.",
+      "TODO: add measured results (rankings, traffic or Core Web Vitals) here only if they can be backed up.",
+    ],
+    whyItMatters:
+      "A typical SEO-driven migration: take a working site, move it onto a framework that search engines handle well, and put the technical foundations in place. It is the work the SEO and migrations service describes.",
+  },
 ];
 
-export const OTHER_WORK = [
+/** Client and production work. Fields are shown only where they exist; nothing is inferred. */
+export interface ClientWork {
+  title: string;
+  emoji: string;
+  /** Hidden from the cards if unknown. */
+  problem?: string;
+  whatIDid: string;
+  tech: string[];
+  outcome?: string;
+  liveUrl?: string;
+  caseStudy?: string;
+}
+
+export const CLIENT_WORK: ClientWork[] = [
+  {
+    title: "Technomanagers.in",
+    emoji: "💼",
+    problem:
+      "A site built with Lovable needed a proper Next.js foundation and technical SEO.",
+    whatIDid:
+      "Migrated it to Next.js and ran an SEO overhaul: structured data, sitemap, robots, og:image and Core Web Vitals work.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
+    outcome:
+      "Live on Next.js with structured data, sitemap, robots and OG images in place.",
+    liveUrl: "https://technomanagers.in",
+    caseStudy: "/case-studies/technomanagers-nextjs-migration",
+  },
   {
     title: "House of 30ML",
-    blurb:
-      "Bar-hopping platform live in Pune. Architected the full frontend (React Native + React web) working directly with the founder.",
+    emoji: "🍹",
+    problem: "A founder needed the web and mobile frontends for a bar-hopping platform in Pune.",
+    whatIDid:
+      "Architected the entire frontend (React Native and React web) and worked directly with the founder.",
+    tech: ["React Native", "React", "Node.js"],
+    outcome: "Live in Pune.",
     liveUrl: "https://www.houseof30ml.in/",
   },
   {
-    title: "Technomanagers.in",
-    blurb:
-      "Migrated a Lovable-built site to Next.js with an SEO overhaul: structured data, sitemap, OG images and Core Web Vitals work.",
-    liveUrl: "https://technomanagers.in",
+    title: "Fanspace",
+    emoji: "🎮",
+    whatIDid:
+      "Built the Display page for Esports Collective's Indian e-sports fan engagement platform (news, stats, tournaments) and bridged website modules into the app with a webview.",
+    tech: ["React Native", "MobX"],
+    outcome: "Production app.",
   },
 ];
 
@@ -183,6 +307,10 @@ export const OTHER_WORK = [
 export const PUBLISHED_STUDIES = CASE_STUDIES.filter(
   (c) => process.env.NODE_ENV !== "production" || !isTodo(c.whatItIs),
 );
+
+export const OWN_PRODUCTS = PUBLISHED_STUDIES.filter((c) => c.kind === "own");
+
+export const caseStudyPath = (slug: string) => `/case-studies/${slug}`;
 
 export const getCaseStudy = (slug: string) =>
   PUBLISHED_STUDIES.find((c) => c.slug === slug);
@@ -200,5 +328,6 @@ export function sanitize(c: CaseStudy): CaseStudy {
     whatIDid: keep(c.whatIDid),
     decisions: keep(c.decisions),
     outcomes: keep(c.outcomes),
+    seo: c.seo ? keep(c.seo) : undefined,
   };
 }

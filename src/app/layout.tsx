@@ -1,96 +1,34 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { SITE_URL } from "@/lib/site";
+import AnalyticsEvents from "@/components/AnalyticsEvents";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { JsonLd, siteGraph, personSchema, websiteSchema } from "@/lib/jsonld";
 
-const BASE_URL = SITE_URL;
+const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
-    template: "%s | Vishnu Vijayakumar",
+    default: `${SITE_NAME}: Technical Lead & Freelance React / Next.js Developer`,
+    template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale. React, React Native, Next.js specialist. Available for selective freelance projects worldwide.",
-  keywords: [
-    "React developer Bangalore",
-    "React Native freelancer India",
-    "hire React developer India",
-    "Next.js developer",
-    "Core Web Vitals expert",
-    "Technical Lead Myntra",
-    "frontend engineer Bengaluru",
-    "React Native developer India",
-    "performance engineering",
-    "web development freelancer India",
-    "Vishnu Vijayakumar",
-  ],
-  authors: [{ name: "Vishnu Vijayakumar" }],
-  openGraph: {
-    title: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
-    description:
-      "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale.",
-    type: "website",
-    url: BASE_URL,
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Vishnu Vijayakumar – Technical Lead & Freelance Developer",
-    description:
-      "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale.",
-    images: ["/og-image.png"],
-  },
+    "Technical Lead at Myntra and freelance React, Next.js & React Native developer. I help startups build high-performance web, mobile, SaaS and AI-powered products.",
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  alternates: { canonical: "/" },
+  robots: { index: true, follow: true },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": `${BASE_URL}/#person`,
-      name: "Vishnu Vijayakumar",
-      jobTitle: "Technical Lead",
-      worksFor: {
-        "@type": "Organization",
-        name: "Myntra Designs Pvt. Ltd.",
-      },
-      url: BASE_URL,
-      email: "vishnu.vijayakumar204@gmail.com",
-      telephone: "+917598110694",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Bengaluru",
-        addressCountry: "IN",
-      },
-      sameAs: [
-        "https://github.com/vishnu-vijayakumar204",
-        "https://www.linkedin.com/in/vishnu-vijayakumar-0529b3162",
-      ],
-    },
-    {
-      "@type": "Service",
-      "@id": `${BASE_URL}/#services`,
-      provider: { "@id": `${BASE_URL}/#person` },
-      serviceType: [
-        "Web Application Development",
-        "Mobile App Development",
-        "SEO Optimization",
-        "Performance Engineering",
-      ],
-      areaServed: "Worldwide",
-      description:
-        "Freelance web and mobile development services including React, React Native, Next.js, SEO optimization, and Core Web Vitals performance engineering.",
-    },
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fbfcf8" },
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
   ],
 };
 
@@ -100,36 +38,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <script
           // Apply the saved/OS theme before first paint to avoid a flash.
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;document.documentElement.classList.toggle('dark',d);}catch(e){}})();`,
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={siteGraph(personSchema, websiteSchema)} />
       </head>
       <body
         className="antialiased"
         style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}
       >
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:font-semibold focus:text-primary-foreground"
+        >
+          Skip to content
+        </a>
         <Navbar />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
+        <AnalyticsEvents />
       </body>
     </html>
   );

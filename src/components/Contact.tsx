@@ -1,295 +1,177 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState } from "react";
 import { Mail, MapPin, Send } from "lucide-react";
+import { track } from "@vercel/analytics";
+import { EMAIL } from "@/lib/site";
 
-const BUDGET_OPTIONS = [
-  "< ₹50,000",
-  "₹50,000 – ₹1,00,000",
-  "₹1,00,000 – ₹3,00,000",
-  "₹3,00,000+",
-  "Prefer to discuss",
+const HELP_OPTIONS = [
+  "Build a product / MVP",
+  "React / Next.js feature work",
+  "React Native app",
+  "AI-powered feature or product",
+  "Performance / Core Web Vitals",
+  "Next.js migration / SEO",
+  "Technical consulting / architecture review",
+  "Not sure yet",
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.12 },
-  }),
-};
+const TIMELINE_OPTIONS = ["As soon as possible", "Within a month", "In 1–3 months", "Just exploring"];
 
-const inputBase =
-  "w-full px-4 py-3 rounded-xl text-foreground text-sm outline-none transition-all duration-200 focus:ring-2 focus:ring-primary/50";
-const inputStyle = {
-  background: "var(--card)",
-  border: "1px solid var(--border)",
-};
+const FIELD =
+  "w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus-visible:ring-2 focus-visible:ring-primary/50";
+const LABEL = "mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground";
 
-export default function Contact() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+const INITIAL = { name: "", email: "", company: "", building: "", help: "", timeline: "", budget: "" };
 
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    budget: "",
-    message: "",
-  });
+export default function Contact({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
+  const [form, setForm] = useState(INITIAL);
+  const [sent, setSent] = useState(false);
+  const H = `h${headingLevel}` as "h2" | "h3";
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Email-based on purpose: there is no backend, so this opens the visitor's mail client
+  // with the enquiry pre-filled. The address is shown beside the form as a fallback.
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(form.subject || "Project Inquiry");
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nBudget: ${form.budget}\n\n${form.message}`
-    );
-    window.location.href = `mailto:vishnu.vijayakumar204@gmail.com?subject=${subject}&body=${body}`;
+    const subject = `Project enquiry${form.company ? `: ${form.company}` : ""} (${form.name})`;
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      `Company: ${form.company || "-"}`,
+      `Timeline: ${form.timeline || "-"}`,
+      `Budget: ${form.budget || "-"}`,
+      `Needs help with: ${form.help || "-"}`,
+      "",
+      "What I'm building:",
+      form.building,
+    ].join("\n");
+    window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    try {
+      track("contact_submit", { help: form.help, timeline: form.timeline });
+    } catch {}
+    setSent(true);
   };
 
   return (
     <section
       id="contact"
-      ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
+      className="relative scroll-mt-20 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
       style={{ backgroundColor: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}
     >
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
-      />
-
-      <div className="max-w-6xl mx-auto">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, rotateX: 18 }}
-          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ transformPerspective: 800 }}
-          className="text-center mb-14"
-        >
-          <h2
-            className="text-4xl md:text-5xl font-extrabold mb-4"
-          >
-            Get In{" "}
-            <span
-              className="text-primary"
-            >
-              Touch
-            </span>
-          </h2>
-          <p className="text-muted-foreground text-lg">
-            Have a project? Let&apos;s talk about what you&apos;re building.
+      <div className="mx-auto max-w-6xl">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <H className="mb-4 text-4xl font-extrabold md:text-5xl">
+            Tell me about <span className="text-primary">your project</span>
+          </H>
+          <p className="text-lg text-muted-foreground">
+            Need senior engineering capacity without hiring another full-time engineer? Tell me what
+            you&apos;re building.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact info */}
-          <motion.div
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-            className="space-y-6"
-          >
-            <div>
-              <h3
-                className="text-xl font-bold text-foreground mb-3"
-              >
-                Contact Information
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                I&apos;m open to freelance projects, contract work, and
-                consulting. Fill in the form and I&apos;ll respond within 24
-                hours.
-              </p>
-            </div>
+        <div className="grid gap-10 lg:grid-cols-5 lg:gap-12">
+          <div className="space-y-5 lg:col-span-2">
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              I take on a small number of part-time freelance and contract projects alongside my role
+              as Technical Lead at Myntra. Available for remote part-time engagements worldwide. Fill
+              in the form and I&apos;ll respond within 24 hours.
+            </p>
 
             {[
-              {
-                icon: Mail,
-                label: "Email",
-                value: "vishnu.vijayakumar204@gmail.com",
-                href: "mailto:vishnu.vijayakumar204@gmail.com",
-              },
-              {
-                icon: MapPin,
-                label: "Location",
-                value: "Bengaluru, India",
-                href: undefined,
-              },
+              { icon: Mail, label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
+              { icon: MapPin, label: "Based in", value: "Bengaluru, India · working remotely", href: undefined },
             ].map(({ icon: Icon, label, value, href }) => (
-              <div
-                key={label}
-                className="flex items-center gap-4 rounded-xl p-4"
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid var(--border)",
-                }}
-              >
-                <div
-                  className="p-2.5 rounded-lg shrink-0"
-                  style={{ background: "color-mix(in srgb, var(--primary) 12%, transparent)" }}
-                >
-                  <Icon size={18} style={{ color: "var(--primary)" }} />
+              <div key={label} className="flex items-center gap-4 rounded-xl border border-border bg-card p-4">
+                <div className="shrink-0 rounded-lg bg-primary/10 p-2.5">
+                  <Icon size={18} className="text-primary" aria-hidden="true" />
                 </div>
-                <div>
-                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-0.5">
-                    {label}
-                  </p>
+                <div className="min-w-0">
+                  <p className="mb-0.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</p>
                   {href ? (
-                    <a
-                      href={href}
-                      className="text-foreground/80 text-sm hover:text-primary transition-colors"
-                    >
+                    <a href={href} className="break-words text-sm text-foreground/80 transition-colors hover:text-primary">
                       {value}
                     </a>
                   ) : (
-                    <p className="text-foreground/80 text-sm">{value}</p>
+                    <p className="text-sm text-foreground/80">{value}</p>
                   )}
                 </div>
               </div>
             ))}
 
-            {/* Availability note */}
-            <div
-              className="rounded-xl p-4 flex items-center gap-3"
-              style={{
-                background: "color-mix(in srgb, var(--primary) 7%, transparent)",
-                border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
-              }}
-            >
-              <span className="w-2.5 h-2.5 rounded-full shrink-0 animate-pulse" style={{ backgroundColor: "var(--primary)" }} />
-              <p className="text-sm" style={{ color: "var(--primary)" }}>
-                Currently available for freelance projects.
+            <div className="flex items-start gap-3 rounded-xl border border-primary/20 bg-primary/5 p-4">
+              <span aria-hidden="true" className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-primary" />
+              <p className="text-sm text-primary">
+                Open to a few part-time engagements. Not available for full-time roles.
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Form */}
-          <motion.div
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-          >
-            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-              <div className="grid sm:grid-cols-2 gap-5">
-                <div>
-                  <label htmlFor="name" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Your name"
-                    className={inputBase}
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="you@example.com"
-                    className={inputBase}
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
+          <form onSubmit={onSubmit} className="space-y-5 lg:col-span-3" aria-describedby="contact-note">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label htmlFor="subject" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={form.subject}
-                  onChange={handleChange}
-                  required
-                  placeholder="Project inquiry"
-                  className={inputBase}
-                  style={inputStyle}
-                />
+                <label htmlFor="name" className={LABEL}>Name</label>
+                <input id="name" name="name" type="text" required autoComplete="name" value={form.name} onChange={onChange} placeholder="Your name" className={FIELD} />
               </div>
-
               <div>
-                <label htmlFor="budget" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-                  Budget
-                </label>
-                <select
-                  id="budget"
-                  name="budget"
-                  value={form.budget}
-                  onChange={handleChange}
-                  className={inputBase}
-                  style={{ ...inputStyle, color: form.budget ? "var(--foreground)" : "var(--muted-foreground)" }}
-                >
-                  <option value="" disabled style={{ color: "var(--muted-foreground)", background: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}>
-                    Select budget range
-                  </option>
-                  {BUDGET_OPTIONS.map((opt) => (
-                    <option key={opt} value={opt} style={{ background: "color-mix(in srgb, var(--muted) 50%, var(--background))", color: "var(--foreground)" }}>
-                      {opt}
-                    </option>
-                  ))}
+                <label htmlFor="email" className={LABEL}>Email</label>
+                <input id="email" name="email" type="email" required autoComplete="email" value={form.email} onChange={onChange} placeholder="you@company.com" className={FIELD} />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="company" className={LABEL}>Company</label>
+              <input id="company" name="company" type="text" autoComplete="organization" value={form.company} onChange={onChange} placeholder="Company or product name" className={FIELD} />
+            </div>
+
+            <div>
+              <label htmlFor="building" className={LABEL}>What are you building?</label>
+              <textarea id="building" name="building" required rows={4} value={form.building} onChange={onChange} placeholder="A sentence or two is plenty: the product, who it's for, and where you are with it." className={`${FIELD} resize-y`} />
+            </div>
+
+            <div>
+              <label htmlFor="help" className={LABEL}>What do you need help with?</label>
+              <select id="help" name="help" required value={form.help} onChange={onChange} className={FIELD}>
+                <option value="" disabled>Select one</option>
+                {HELP_OPTIONS.map((o) => (<option key={o} value={o}>{o}</option>))}
+              </select>
+            </div>
+
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="timeline" className={LABEL}>Expected timeline</label>
+                <select id="timeline" name="timeline" required value={form.timeline} onChange={onChange} className={FIELD}>
+                  <option value="" disabled>Select one</option>
+                  {TIMELINE_OPTIONS.map((o) => (<option key={o} value={o}>{o}</option>))}
                 </select>
               </div>
-
               <div>
-                <label htmlFor="message" className="block text-xs font-medium text-muted-foreground mb-1.5 uppercase tracking-wider">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={form.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  placeholder="Tell me about your project..."
-                  className={`${inputBase} resize-none`}
-                  style={inputStyle}
-                />
+                <label htmlFor="budget" className={LABEL}>Approx. budget (optional)</label>
+                <input id="budget" name="budget" type="text" value={form.budget} onChange={onChange} placeholder="e.g. $3k–5k, or per month" className={FIELD} />
               </div>
+            </div>
 
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-xl font-semibold text-primary-foreground flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
-                style={{
-                  background: "var(--primary)",
-                  boxShadow: "var(--shadow-lg)",
-                }}
-              >
-                Send Message
-                <Send size={16} />
-              </button>
-            </form>
-          </motion.div>
+            <button
+              type="submit"
+              className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 font-semibold text-primary-foreground shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            >
+              Start a project <Send size={16} aria-hidden="true" />
+            </button>
+
+            <p id="contact-note" role="status" className="text-sm text-muted-foreground">
+              {sent ? (
+                <>
+                  Your email app should have opened with the details filled in. If nothing happened, email{" "}
+                  <a className="text-primary underline" href={`mailto:${EMAIL}`}>{EMAIL}</a> directly.
+                </>
+              ) : (
+                "This opens your email app with your details pre-filled. Nothing is sent until you press send there."
+              )}
+            </p>
+          </form>
         </div>
       </div>
     </section>
