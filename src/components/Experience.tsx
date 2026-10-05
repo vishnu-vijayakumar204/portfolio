@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 const EXPERIENCES = [
@@ -40,233 +39,110 @@ const EXPERIENCES = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.15 },
-  }),
-};
-
 export default function Experience() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
   const [openIndex, setOpenIndex] = useState<number>(0);
 
   return (
     <section
       id="experience"
-      ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
+      className="relative scroll-mt-20 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
       style={{ backgroundColor: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}
     >
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
-      />
-
-      <div className="max-w-4xl mx-auto">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, rotateX: 18 }}
-          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ transformPerspective: 800 }}
-          className="text-center mb-16"
-        >
-          <h2
-            className="text-4xl md:text-5xl font-extrabold mb-4"
-          >
-            Work{" "}
-            <span
-              className="text-primary"
-            >
-              Experience
-            </span>
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-14 text-center">
+          <h2 className="mb-4 text-4xl font-extrabold md:text-5xl">
+            Work <span className="text-primary">Experience</span>
           </h2>
-          <p className="text-muted-foreground text-lg">
-            6+ years of impact across product, scale, and performance.
-          </p>
-        </motion.div>
+          <p className="text-lg text-muted-foreground">6+ years of impact across product, scale, and performance.</p>
+        </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line — draws in on scroll */}
-          <motion.div
+        <ol className="relative space-y-6 sm:space-y-8">
+          <span
             aria-hidden="true"
-            className="absolute left-4 top-2 bottom-2 w-px"
-            initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.3 }}
-            style={{
-              background:
-                "linear-gradient(to bottom, var(--primary), var(--primary) 50%, color-mix(in srgb, var(--primary) 15%, transparent))",
-              transformOrigin: "top",
-            }}
+            className="absolute bottom-2 left-4 top-2 hidden w-px sm:block"
+            style={{ background: "linear-gradient(to bottom, var(--primary), color-mix(in srgb, var(--primary) 15%, transparent))" }}
           />
-
-          <div className="space-y-8">
-            {EXPERIENCES.map((exp, index) => (
-              <motion.div
-                key={exp.company}
-                custom={index + 1}
-                variants={fadeUp}
-                initial="hidden"
-                animate={inView ? "visible" : "hidden"}
-                className="relative pl-14"
-              >
-                {/* Dot — spring pop on scroll */}
-                <motion.div
-                  className="absolute left-0 top-5 flex items-center justify-center w-8 h-8"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={inView ? { scale: 1, opacity: 1 } : {}}
-                  transition={{
-                    type: "spring",
-                    stiffness: 380,
-                    damping: 14,
-                    delay: 0.5 + index * 0.3,
-                  }}
-                >
+          {EXPERIENCES.map((exp, index) => {
+            const open = openIndex === index;
+            const panelId = `exp-panel-${index}`;
+            return (
+              <li key={exp.company} className="relative sm:pl-14">
+                <span aria-hidden="true" className="absolute left-0 top-5 hidden h-8 w-8 items-center justify-center sm:flex">
                   {exp.current ? (
                     <>
-                      <span
-                        className="absolute inline-block w-4 h-4 rounded-full animate-ping"
-                        style={{ backgroundColor: "color-mix(in srgb, var(--primary) 40%, transparent)" }}
-                      />
-                      <span
-                        className="relative inline-block w-3 h-3 rounded-full"
-                        style={{ backgroundColor: "var(--primary)" }}
-                      />
+                      <span className="absolute inline-block h-4 w-4 rounded-full bg-primary/40 motion-safe:animate-ping" />
+                      <span className="relative inline-block h-3 w-3 rounded-full bg-primary" />
                     </>
                   ) : (
-                    <span
-                      className="inline-block w-3 h-3 rounded-full"
-                      style={{ backgroundColor: "var(--muted-foreground)" }}
-                    />
+                    <span className="inline-block h-3 w-3 rounded-full bg-muted-foreground" />
                   )}
-                </motion.div>
+                </span>
 
-                {/* Card */}
-                <div
-                  className="rounded-2xl overflow-hidden"
-                  style={{
-                    background: "var(--card)",
-                    border: `1px solid ${exp.current ? "color-mix(in srgb, var(--primary) 25%, transparent)" : "var(--border)"}`,
-                  }}
-                >
-                  {/* Header — always visible, acts as toggle */}
-                  <button
-                    onClick={() =>
-                      setOpenIndex(openIndex === index ? -1 : index)
-                    }
-                    className="w-full text-left px-6 py-5 flex items-start justify-between gap-4 group"
-                    aria-expanded={openIndex === index}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-center gap-2 mb-1">
-                        <h3
-                          className="text-lg font-bold text-foreground"
-                        >
-                          {exp.role}
-                        </h3>
-                        {exp.current && (
-                          <span
-                            className="px-2 py-0.5 rounded-full text-xs font-semibold"
-                            style={{
-                              background: "color-mix(in srgb, var(--primary) 15%, transparent)",
-                              color: "var(--primary)",
-                              border: "1px solid color-mix(in srgb, var(--primary) 30%, transparent)",
-                            }}
-                          >
-                            Current
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
-                        <span style={{ color: exp.current ? "var(--primary)" : "var(--muted-foreground)" }}>
-                          {exp.company}
+                <div className={`overflow-hidden rounded-2xl border bg-card ${exp.current ? "border-primary/30" : "border-border"}`}>
+                  <h3>
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(open ? -1 : index)}
+                      className="group flex w-full items-start justify-between gap-4 px-5 py-5 text-left focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary sm:px-6"
+                      aria-expanded={open}
+                      aria-controls={panelId}
+                    >
+                      <span className="min-w-0 flex-1">
+                        <span className="mb-1 flex flex-wrap items-center gap-2">
+                          <span className="text-lg font-bold text-foreground">{exp.role}</span>
+                          {exp.current && (
+                            <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-0.5 text-xs font-semibold text-primary">Current</span>
+                          )}
                         </span>
-                        <span className="text-muted-foreground">·</span>
-                        <span>{exp.location}</span>
-                        <span className="text-muted-foreground">·</span>
-                        <span>{exp.period}</span>
+                        <span className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                          <span className={exp.current ? "font-semibold text-primary" : ""}>{exp.company}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{exp.location}</span>
+                          <span aria-hidden="true">·</span>
+                          <span>{exp.period}</span>
+                        </span>
+                      </span>
+                      <ChevronDown
+                        size={18}
+                        aria-hidden="true"
+                        className={`mt-1 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:text-foreground ${open ? "rotate-180" : ""}`}
+                      />
+                    </button>
+                  </h3>
+
+                  {/* Always in the DOM (crawlable); height animates with CSS only. */}
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-hidden={!open}
+                    className={`grid transition-[grid-template-rows] duration-300 motion-reduce:transition-none ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="border-t border-border px-5 pb-6 sm:px-6">
+                        <p className="mb-5 mt-4 text-sm leading-relaxed text-muted-foreground">{exp.summary}</p>
+                        <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Key Achievements</h4>
+                        <ul className="mb-6 space-y-2">
+                          {exp.achievements.map((a) => (
+                            <li key={a} className="flex items-start gap-2 text-sm text-foreground/80">
+                              <span aria-hidden="true" className="mt-1 shrink-0 text-primary">▹</span>
+                              <span>{a}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Stack</h4>
+                        <ul className="flex flex-wrap gap-2">
+                          {exp.tech.map((t) => (
+                            <li key={t} className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{t}</li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <ChevronDown
-                      size={18}
-                      className="mt-1 shrink-0 text-muted-foreground transition-transform duration-300 group-hover:text-foreground"
-                      style={{
-                        transform: openIndex === index ? "rotate(180deg)" : "rotate(0deg)",
-                      }}
-                    />
-                  </button>
-
-                  {/* Expandable content */}
-                  <AnimatePresence initial={false}>
-                    {openIndex === index && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{
-                          height: { type: "spring", stiffness: 120, damping: 22 },
-                          opacity: { duration: 0.18 },
-                        }}
-                        className="overflow-hidden"
-                      >
-                        <div
-                          className="px-6 pb-6"
-                          style={{
-                            borderTop: "1px solid var(--border)",
-                          }}
-                        >
-                          <p className="text-muted-foreground text-sm leading-relaxed mt-4 mb-5">
-                            {exp.summary}
-                          </p>
-
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-                            Key Achievements
-                          </h4>
-                          <ul className="space-y-2 mb-6">
-                            {exp.achievements.map((a, i) => (
-                              <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                                <span className="mt-1 shrink-0" style={{ color: "var(--primary)" }}>
-                                  ▹
-                                </span>
-                                <span>{a}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-                            Stack
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {exp.tech.map((t) => (
-                              <span
-                                key={t}
-                                className="px-3 py-1 rounded-full text-xs font-medium"
-                                style={{
-                                  background: "color-mix(in srgb, var(--primary) 10%, transparent)",
-                                  border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
-                                  color: "var(--primary)",
-                                }}
-                              >
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

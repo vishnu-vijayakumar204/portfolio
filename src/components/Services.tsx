@@ -1,188 +1,109 @@
-"use client";
-
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { CONTACT_HREF } from "@/components/ui";
 
 const SERVICES = [
   {
-    icon: "💻",
-    title: "Web App Development",
-    subtitle: "React / Next.js",
+    icon: "🚀",
+    title: "Product Development",
+    description: "Build production-ready web products, SaaS applications and MVPs.",
+    highlights: ["MVPs", "SaaS", "End to end"],
+    href: "/nextjs-developer",
+  },
+  {
+    icon: "⚛️",
+    title: "React / Next.js Engineering",
     description:
-      "New builds and feature enhancements for SaaS products, e-commerce, and content platforms. Server components, App Router, API routes — the full modern Next.js stack.",
-    highlights: ["New builds", "Feature enhancements", "API integrations"],
+      "Build new features, applications, migrations and frontend architecture. Next.js migrations include the SEO groundwork: structured data, sitemaps, OG tags.",
+    highlights: ["Features", "Migrations", "Architecture"],
+    href: "/react-developer",
   },
   {
     icon: "📱",
-    title: "Mobile App Development",
-    subtitle: "React Native",
-    description:
-      "Cross-platform iOS & Android apps with a native feel. From greenfield projects to adding screens to an existing codebase — production-ready and optimised.",
-    highlights: ["iOS & Android", "Greenfield & brownfield", "Production-ready"],
+    title: "React Native",
+    description: "Build or extend cross-platform mobile applications, from greenfield apps to new screens in an existing codebase.",
+    highlights: ["iOS & Android", "Greenfield & brownfield"],
+    href: "/react-native-developer",
   },
   {
-    icon: "🔍",
-    title: "SEO & Next.js Migrations",
-    subtitle: "SEO optimisation",
-    description:
-      "Migrate legacy apps to Next.js with structured data, sitemaps, OG tags, and Core Web Vitals improvements. I've done it for client sites — measurable ranking gains.",
-    highlights: ["Next.js migrations", "Structured data", "Core Web Vitals"],
+    icon: "✨",
+    title: "AI-Powered Products",
+    description: "Integrate AI workflows, APIs and AI-driven product experiences, shipped as real products rather than demos.",
+    highlights: ["LLM integrations", "AI workflows"],
+    href: "/nextjs-developer",
   },
   {
     icon: "⚡",
     title: "Performance Engineering",
-    subtitle: "FCP / LCP / CLS",
     description:
-      "Deep-dive into slow pages — lazy loading, bundle analysis, image optimisation, critical CSS. Backed by real Myntra-scale experience improving FCP and LCP metrics.",
-    highlights: ["Lighthouse audits", "Lazy loading", "Bundle optimisation"],
+      "Improve Core Web Vitals, rendering performance, bundle size and frontend architecture. Backed by real Myntra-scale experience improving FCP and LCP.",
+    highlights: ["Core Web Vitals", "Bundle size", "Rendering"],
+    href: "/performance",
+  },
+  {
+    icon: "🧭",
+    title: "Technical Consulting",
+    description: "Architecture reviews, frontend modernisation and technical direction.",
+    highlights: ["Architecture reviews", "Modernisation"],
+    href: CONTACT_HREF,
+    cta: "Discuss it",
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, delay: i * 0.1 },
-  }),
-};
-
 export default function Services() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-
   return (
     <section
       id="services"
-      ref={ref}
-      className="relative py-28 px-4 sm:px-6 lg:px-8 scroll-mt-20"
+      className="relative scroll-mt-20 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
       style={{ backgroundColor: "color-mix(in srgb, var(--muted) 50%, var(--background))" }}
     >
-      <div
-        aria-hidden="true"
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24"
-        style={{ background: "linear-gradient(to bottom, color-mix(in srgb, var(--primary) 40%, transparent), transparent)" }}
-      />
-
-      <div className="max-w-6xl mx-auto">
-        {/* Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, rotateX: 18 }}
-          animate={inView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          style={{ transformPerspective: 800 }}
-          className="text-center mb-14"
-        >
-          <h2
-            className="text-4xl md:text-5xl font-extrabold mb-4"
-          >
-            Freelance{" "}
-            <span
-              className="text-primary"
-            >
-              Services
-            </span>
+      <div className="mx-auto max-w-6xl">
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <h2 className="mb-4 text-4xl font-extrabold md:text-5xl">
+            How I can <span className="text-primary">help</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Quality work, no hidden rates. Enquire to discuss fit and budget.
+          <p className="text-lg text-muted-foreground">
+            All of it can be delivered as a part-time engagement, alongside my role as Technical Lead at Myntra.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Service cards */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-12" style={{ perspective: "1000px" }}>
-          {SERVICES.map((svc, index) => (
-            <motion.div
+        <div className="mb-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICES.map((svc) => (
+            <article
               key={svc.title}
-              custom={index + 1}
-              variants={fadeUp}
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="rounded-2xl p-7 flex flex-col gap-4 group cursor-default"
-              style={{
-                background: "var(--card)",
-                border: "1px solid var(--border)",
-                transformStyle: "preserve-3d",
-                willChange: "transform",
-              }}
-              whileHover={{
-                scale: 1.03,
-                rotateX: -3,
-                rotateY: 4,
-                borderColor: "color-mix(in srgb, var(--primary) 30%, transparent)",
-                transition: { type: "spring", stiffness: 250, damping: 18 },
-              }}
+              className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
             >
-              <div className="flex items-start gap-4">
-                <span className="text-3xl shrink-0" role="img" aria-label={svc.title}>
-                  {svc.icon}
-                </span>
-                <div>
-                  <h3
-                    className="font-bold text-foreground text-lg leading-tight"
-                  >
-                    {svc.title}
-                  </h3>
-                  <p className="text-xs font-medium mt-0.5" style={{ color: "var(--primary)" }}>
-                    {svc.subtitle}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {svc.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mt-auto">
+              <span className="text-3xl" aria-hidden="true">{svc.icon}</span>
+              <h3 className="text-lg font-bold leading-tight text-foreground">{svc.title}</h3>
+              <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{svc.description}</p>
+              <ul className="flex flex-wrap gap-2">
                 {svc.highlights.map((h) => (
-                  <span
-                    key={h}
-                    className="px-2.5 py-1 rounded-full text-xs font-medium"
-                    style={{
-                      background: "color-mix(in srgb, var(--primary) 8%, transparent)",
-                      border: "1px solid color-mix(in srgb, var(--primary) 15%, transparent)",
-                      color: "var(--primary)",
-                    }}
-                  >
-                    {h}
-                  </span>
+                  <li key={h} className="rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">{h}</li>
                 ))}
-              </div>
-            </motion.div>
+              </ul>
+              <Link href={svc.href} className="inline-flex min-h-8 items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+                {svc.cta ?? "Learn more"} <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            </article>
           ))}
         </div>
 
-        {/* CTA banner */}
-        <motion.div
-          custom={5}
-          variants={fadeUp}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="rounded-2xl px-8 py-10 text-center"
-          style={{
-            background:
-              "linear-gradient(135deg, color-mix(in srgb, var(--primary) 12%, transparent) 0%, color-mix(in srgb, var(--primary) 12%, transparent) 100%)",
-            border: "1px solid color-mix(in srgb, var(--primary) 20%, transparent)",
-          }}
-        >
-          <h3
-            className="text-2xl md:text-3xl font-extrabold text-foreground mb-3"
-          >
-            Have a project in mind?
+        <div className="rounded-2xl border border-primary/20 bg-primary/10 px-6 py-10 text-center sm:px-8">
+          <h3 className="mb-3 text-2xl font-extrabold text-foreground md:text-3xl">
+            Need senior engineering capacity without another full-time hire?
           </h3>
-          <p className="text-muted-foreground mb-7 max-w-lg mx-auto">
-            Tell me what you&apos;re building. I&apos;ll reply within 24 hours.
+          <p className="mx-auto mb-7 max-w-lg text-muted-foreground">
+            I take on a small number of part-time freelance and contract projects. Tell me what you&apos;re building.
           </p>
-          <a
-            href="#contact"
-            className="inline-flex items-center px-7 py-3 rounded-full font-semibold text-primary-foreground transition-all duration-200 hover:scale-105"
-            style={{
-              background: "var(--primary)",
-              boxShadow: "var(--shadow-lg)",
-            }}
-          >
-            Start a Conversation
-          </a>
-        </motion.div>
+          <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+            <Link href="#contact" className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-7 py-3 font-semibold text-primary-foreground shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+              Start a project
+            </Link>
+            <Link href="/freelance" className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-7 py-3 font-semibold text-foreground transition-colors hover:border-primary hover:text-primary">
+              How engagements work
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

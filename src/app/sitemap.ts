@@ -1,28 +1,18 @@
 import { MetadataRoute } from "next";
-import { PUBLISHED_STUDIES } from "@/data/caseStudies";
-import { SITE_URL } from "@/lib/site";
-
-const BASE_URL = SITE_URL;
+import { PUBLISHED_STUDIES, caseStudyPath } from "@/data/caseStudies";
+import { SERVICE_PAGES } from "@/data/services";
+import { getPosts } from "@/data/posts";
+import { absoluteUrl } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${BASE_URL}/work-with-me`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    ...PUBLISHED_STUDIES.map((c) => ({
-      url: `${BASE_URL}/work/${c.slug}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    })),
+  const posts = getPosts();
+  const paths = [
+    "/",
+    "/freelance",
+    ...SERVICE_PAGES.map((s) => s.path),
+    ...PUBLISHED_STUDIES.map((c) => caseStudyPath(c.slug)),
+    // The blog index is noindex until there is at least one article.
+    ...(posts.length > 0 ? ["/blog", ...posts.map((p) => `/blog/${p.slug}`)] : []),
   ];
+  return [...new Set(paths)].map((p) => ({ url: absoluteUrl(p) }));
 }

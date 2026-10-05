@@ -1,65 +1,64 @@
-"use client";
-
+import Link from "next/link";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { SERVICE_PAGES } from "@/data/services";
+import { getPosts } from "@/data/posts";
+import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/site";
+
+const linkCls = "inline-flex min-h-8 items-center text-sm text-muted-foreground transition-colors hover:text-foreground";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const hasPosts = getPosts().length > 0;
 
   return (
-    <footer
-      className="relative py-10 px-4 sm:px-6 lg:px-8"
-      style={{
-        backgroundColor: "var(--background)",
-        borderTop: "1px solid var(--border)",
-      }}
-    >
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-        {/* Brand */}
-        <div className="text-center sm:text-left">
-          <span
-            className="text-xl font-extrabold text-primary block"
-          >
-            VV
-          </span>
-          <p className="text-muted-foreground text-xs mt-1">
-            Technical Lead · Freelance Developer
+    <footer className="border-t border-border bg-background px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+        <div>
+          <span className="block text-xl font-extrabold text-primary">VV</span>
+          <p className="mt-2 max-w-xs text-sm text-muted-foreground">
+            Technical Lead at Myntra. Part-time freelance &amp; contract product engineering through Deviza Labs.
           </p>
+          <div className="mt-4 flex items-center gap-1">
+            {[
+              { href: GITHUB_URL, label: "GitHub", Icon: Github, ext: true },
+              { href: LINKEDIN_URL, label: "LinkedIn", Icon: Linkedin, ext: true },
+              { href: `mailto:${EMAIL}`, label: "Email", Icon: Mail, ext: false },
+            ].map(({ href, label, Icon, ext }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                {...(ext ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                <Icon size={19} aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
 
-        {/* Social */}
-        <div className="flex items-center gap-4">
-          <a
-            href="https://github.com/vishnu-vijayakumar204"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            aria-label="GitHub"
-          >
-            <Github size={19} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/vishnu-vijayakumar-0529b3162"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            aria-label="LinkedIn"
-          >
-            <Linkedin size={19} />
-          </a>
-          <a
-            href="mailto:vishnu.vijayakumar204@gmail.com"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            aria-label="Email"
-          >
-            <Mail size={19} />
-          </a>
-        </div>
+        <nav aria-label="Services">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-foreground">Services</p>
+          <ul className="space-y-1">
+            <li><Link href="/freelance" className={linkCls}>Part-time engagements</Link></li>
+            {SERVICE_PAGES.map((s) => (
+              <li key={s.slug}><Link href={s.path} className={linkCls}>{s.metaTitle}</Link></li>
+            ))}
+          </ul>
+        </nav>
 
-        {/* Copyright */}
-        <p className="text-muted-foreground text-xs text-center sm:text-right">
-          © {year} Vishnu Vijayakumar
-        </p>
+        <nav aria-label="Explore">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-foreground">Explore</p>
+          <ul className="space-y-1">
+            <li><Link href="/#projects" className={linkCls}>Projects</Link></li>
+            <li><Link href="/case-studies/travelvisastack" className={linkCls}>TravelVisaStack case study</Link></li>
+            <li><Link href="/case-studies/technomanagers-nextjs-migration" className={linkCls}>Next.js migration case study</Link></li>
+            {hasPosts && <li><Link href="/blog" className={linkCls}>Blog</Link></li>}
+            <li><Link href="/freelance#contact" className={linkCls}>Start a project</Link></li>
+          </ul>
+        </nav>
       </div>
+      <p className="mx-auto mt-10 max-w-6xl text-xs text-muted-foreground">© {year} Vishnu Vijayakumar</p>
     </footer>
   );
 }
