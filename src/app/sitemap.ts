@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
 import { PUBLISHED_STUDIES } from "@/data/caseStudies";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://portfolio-two-peach-13.vercel.app";
+const BASE_URL = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
