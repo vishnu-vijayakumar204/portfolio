@@ -2,9 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { ExternalLink, Clock } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, Clock, ArrowRight } from "lucide-react";
+import { PUBLISHED_STUDIES } from "@/data/caseStudies";
 
-type Tag = "Production" | "Client" | "Side Project";
+type Tag = "Own Product" | "Production" | "Client";
 
 interface Project {
   emoji: string;
@@ -14,9 +16,10 @@ interface Project {
   description: string;
   tech: string[];
   liveUrl?: string;
+  caseStudy?: string;
 }
 
-const PROJECTS: Project[] = [
+const CLIENT_PROJECTS: Project[] = [
   {
     emoji: "🎮",
     title: "Fanspace",
@@ -43,25 +46,21 @@ const PROJECTS: Project[] = [
     tech: ["React Native", "React", "Node.js"],
     liveUrl: "https://www.houseof30ml.in/",
   },
-  {
-    emoji: "✈️",
-    title: "travelvisastack.com",
-    tag: "Side Project",
-    description:
-      "AI-powered visa requirements checker and trip itinerary generator. Built under Deviza Labs — Next.js with LLM integration and structured SEO.",
-    tech: ["Next.js", "AI/LLM", "TypeScript"],
-    liveUrl: "https://travelvisastack.com",
-  },
-  {
-    emoji: "💰",
-    title: "Deviza Expense Tracker",
-    tag: "Side Project",
-    wip: true,
-    description:
-      "LLM-based expense parser that accepts natural language inputs via Telegram and WhatsApp. No manual categorisation — just send a message.",
-    tech: ["Node.js", "LLM", "Telegram Bot", "WhatsApp API"],
-  },
 ];
+
+// The products I built myself: each links to its case study.
+const OWN_PROJECTS: Project[] = PUBLISHED_STUDIES.map((c) => ({
+  emoji: c.emoji,
+  title: c.title,
+  tag: "Own Product",
+  wip: c.wip,
+  description: c.whatItIs,
+  tech: c.tech,
+  liveUrl: c.liveUrl,
+  caseStudy: `/work/${c.slug}`,
+}));
+
+const PROJECTS: Project[] = [...OWN_PROJECTS, ...CLIENT_PROJECTS];
 
 const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
   Production: {
@@ -74,7 +73,7 @@ const TAG_STYLES: Record<Tag, { bg: string; color: string; border: string }> = {
     color: "#fcd34d",
     border: "rgba(245,158,11,0.25)",
   },
-  "Side Project": {
+  "Own Product": {
     bg: "rgba(168,85,247,0.1)",
     color: "#d8b4fe",
     border: "rgba(168,85,247,0.25)",
@@ -120,7 +119,7 @@ export default function Projects() {
             </span>
           </h2>
           <p className="text-slate-400 text-lg">
-            Production apps, client builds, and side experiments.
+            Products I built end to end, plus client and production work.
           </p>
         </motion.div>
 
@@ -220,20 +219,32 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* Live link */}
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-auto inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-white"
-                      style={{ color: "#a5b4fc" }}
-                      aria-label={`View ${project.title} live`}
-                    >
-                      <ExternalLink size={14} />
-                      View live
-                    </a>
-                  )}
+                  {/* Links */}
+                  <div className="mt-auto flex items-center gap-5">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-200 hover:text-white"
+                        style={{ color: "#a5b4fc" }}
+                        aria-label={`View ${project.title} live`}
+                      >
+                        <ExternalLink size={14} />
+                        View live
+                      </a>
+                    )}
+                    {project.caseStudy && (
+                      <Link
+                        href={project.caseStudy}
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-300 transition-colors duration-200 hover:text-white"
+                        aria-label={`Read the ${project.title} case study`}
+                      >
+                        Case study
+                        <ArrowRight size={14} />
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </motion.article>
             );

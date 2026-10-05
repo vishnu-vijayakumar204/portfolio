@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { SITE_URL } from "@/lib/site";
 
-const BASE_URL = "https://portfolio-two-peach-13.vercel.app";
+const BASE_URL = SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     template: "%s | Vishnu Vijayakumar",
   },
   description:
-    "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale. React, React Native, Next.js specialist. Available for freelance projects in India.",
+    "Technical Lead at Myntra with 6+ years building high-performance web & mobile products at scale. React, React Native, Next.js specialist. Available for selective freelance projects worldwide.",
   keywords: [
     "React developer Bangalore",
     "React Native freelancer India",
@@ -86,7 +87,7 @@ const jsonLd = {
         "SEO Optimization",
         "Performance Engineering",
       ],
-      areaServed: "IN",
+      areaServed: "Worldwide",
       description:
         "Freelance web and mobile development services including React, React Native, Next.js, SEO optimization, and Core Web Vitals performance engineering.",
     },

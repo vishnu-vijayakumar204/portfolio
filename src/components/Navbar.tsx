@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
@@ -13,9 +15,15 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
+const WORK_WITH_ME = "/work-with-me";
+
+const MotionLink = motion(Link);
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -23,9 +31,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // On the homepage, smooth-scroll. Elsewhere, let Next navigate to "/#section".
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
     setMobileOpen(false);
+    if (!isHome) return;
+    e.preventDefault();
     setTimeout(() => {
       const el = document.querySelector(href);
       if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -52,11 +62,13 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a
-            href="#"
+          <Link
+            href="/"
             onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              if (isHome) {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
             }}
             aria-label="Home"
           >
@@ -69,14 +81,14 @@ export default function Navbar() {
             >
               VV
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
             {navLinks.map((link, i) => (
-              <motion.a
+              <MotionLink
                 key={link.href}
-                href={link.href}
+                href={isHome ? link.href : `/${link.href}`}
                 onClick={(e) => scrollToSection(e, link.href)}
                 className="text-sm text-slate-400 hover:text-white transition-colors duration-200 relative group"
                 initial={{ opacity: 0, y: -10 }}
@@ -88,15 +100,14 @@ export default function Navbar() {
                   className="absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300"
                   style={{ background: "linear-gradient(90deg, #6366f1, #a855f7)" }}
                 />
-              </motion.a>
+              </MotionLink>
             ))}
           </nav>
 
           {/* CTA + hamburger */}
           <div className="flex items-center gap-4">
-            <motion.a
-              href="#contact"
-              onClick={(e) => scrollToSection(e, "#contact")}
+            <MotionLink
+              href={WORK_WITH_ME}
               className="hidden md:inline-flex items-center px-5 py-2 rounded-full text-sm font-semibold text-white"
               style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
               whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(99,102,241,0.4)" }}
@@ -105,8 +116,8 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7 }}
             >
-              Hire Me
-            </motion.a>
+              Work With Me
+            </MotionLink>
             <button
               className="md:hidden text-slate-400 hover:text-white transition-colors p-1"
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -169,9 +180,9 @@ export default function Navbar() {
               }}
             >
               {navLinks.map((link) => (
-                <motion.a
+                <MotionLink
                   key={link.href}
-                  href={link.href}
+                  href={isHome ? link.href : `/${link.href}`}
                   onClick={(e) => scrollToSection(e, link.href)}
                   className="text-slate-300 hover:text-white text-base py-3 px-2 rounded-lg hover:bg-white/5 transition-colors block"
                   variants={{
@@ -180,11 +191,11 @@ export default function Navbar() {
                   }}
                 >
                   {link.label}
-                </motion.a>
+                </MotionLink>
               ))}
-              <motion.a
-                href="#contact"
-                onClick={(e) => scrollToSection(e, "#contact")}
+              <MotionLink
+                href={WORK_WITH_ME}
+                onClick={() => setMobileOpen(false)}
                 className="mt-3 inline-flex items-center justify-center px-5 py-3 rounded-full text-sm font-semibold text-white"
                 style={{ background: "linear-gradient(135deg, #6366f1, #a855f7)" }}
                 variants={{
@@ -193,8 +204,8 @@ export default function Navbar() {
                 }}
                 whileTap={{ scale: 0.97 }}
               >
-                Hire Me
-              </motion.a>
+                Work With Me
+              </MotionLink>
             </motion.div>
           </motion.div>
         )}
