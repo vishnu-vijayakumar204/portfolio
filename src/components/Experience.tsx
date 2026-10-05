@@ -19,7 +19,7 @@ const EXPERIENCES = [
       "Built Federator UI — real-time content configuration system with audience targeting across home, SIS, PLP, PDP.",
       "Drove measurable FCP, LCP, and Core Web Vitals improvements across Myntra's consumer surfaces.",
     ],
-    tech: ["React", "React Native", "Node.js", "MongoDB", "GoLang", "SQL"],
+    tech: ["React", "React Native", "Node.js", "MongoDB", "GoLang"],
   },
   {
     role: "Product Engineer",
