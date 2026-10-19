@@ -34,7 +34,7 @@ export default function About() {
           <div className="space-y-4 text-[15px] leading-relaxed text-foreground/80">
             <p>
               I&apos;m a <strong className="text-foreground">Technical Lead at Myntra</strong> with
-              6+ years of experience building web and mobile products at scale. I own the
+              7+ years of experience building web and mobile products at scale. I own the
               full frontend of home, SIS, PLP, and PDP pages used by millions of shoppers
               across India.
             </p>

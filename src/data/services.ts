@@ -80,7 +80,7 @@ export const SERVICE_PAGES: ServicePage[] = [
       },
       {
         title: "Own products under Deviza Labs",
-        body: "A web dashboard for an AI-powered expense tracker, a visa-checker dashboard, and a curator admin for a race-discovery platform, all shipped by me end to end.",
+        body: "A web dashboard for an AI-powered expense tracker, a visa-checker dashboard, and a curator admin for a race-discovery platform, all built by me end to end.",
       },
     ],
     caseStudies: ["expense-tracker", "compete"],
@@ -112,7 +112,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     eyebrow: "Next.js · Part-time engagements",
     h1: "Senior Next.js developer for startups",
     intro:
-      "I've shipped Next.js products of my own, from a programmatic-SEO visa site to an AI expense tracker to a race-discovery platform with an admin back office, and I migrated a client site from Lovable to Next.js. If you need a Next.js build, feature or migration done properly, I take on a small number of part-time engagements alongside my role as Technical Lead at Myntra.",
+      "I've shipped Next.js products of my own, from a programmatic-SEO visa site to a race-discovery platform with an admin back office, I'm building an AI expense tracker, and I migrated a client site from Lovable to Next.js. If you need a Next.js build, feature or migration done properly, I take on a small number of part-time engagements alongside my role as Technical Lead at Myntra.",
     build: [
       {
         title: "SaaS and product sites",

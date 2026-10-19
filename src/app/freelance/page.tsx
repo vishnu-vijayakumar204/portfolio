@@ -36,7 +36,7 @@ const TYPICAL = [
 
 const WHY = [
   { title: "Technical Lead at Myntra", body: "I own the frontend for core consumer pages in React and React Native. I bring the same standards to the projects I take on." },
-  { title: "I ship my own products", body: "TravelVisaStack, Deviza Expense Tracker and Compete are live, built by me from idea to production: auth, billing, AI, SEO and deployment included." },
+  { title: "I ship my own products", body: "TravelVisaStack and Compete are live and Deviza Expense Tracker is in development, all built by me from idea to production: auth, billing, AI, SEO and deployment included." },
   { title: "Ownership, not tickets", body: "I'd rather own a feature from scoping to production than be handed isolated tasks." },
   { title: "Part-time, by design", body: "You get senior capacity for the work in front of you, without another full-time hire. I work around my role at Myntra and keep my client list small." },
 ];
@@ -113,7 +113,7 @@ export default function FreelancePage() {
       </Section>
 
       <Section id="work">
-        <SectionHeading title="Selected work" sub="Products I built and shipped myself. Open the live site and judge for yourself." />
+        <SectionHeading title="Selected work" sub="Products I built myself. Open the live site and judge for yourself." />
         <div className="space-y-5">
           {OWN_PRODUCTS.map((c) => (
             <Card key={c.slug} as="article" className="grid gap-5 md:grid-cols-[1fr_auto] md:items-center">
