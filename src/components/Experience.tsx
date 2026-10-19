@@ -53,7 +53,7 @@ export default function Experience() {
           <h2 className="mb-4 text-4xl font-extrabold md:text-5xl">
             Work <span className="text-primary">Experience</span>
           </h2>
-          <p className="text-lg text-muted-foreground">6+ years of impact across product, scale, and performance.</p>
+          <p className="text-lg text-muted-foreground">7+ years of impact across product, scale, and performance.</p>
         </div>
 
         <ol className="relative space-y-6 sm:space-y-8">

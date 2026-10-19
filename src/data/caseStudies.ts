@@ -35,6 +35,8 @@ export interface CaseStudy {
   cardBuilt?: string;
   /** Short "key decision" line for cards. */
   cardDecision?: string;
+  /** Short "outcome" line for cards, only where a real number exists. */
+  cardOutcome?: string;
   /** Performance / SEO facts, only where they exist. */
   seo?: string[];
   /** Whether this was an own product or client work. */
@@ -60,6 +62,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "The whole product: UI, API routes, database, AI content pipeline, payments and deployment.",
     cardDecision:
       "Pre-generates visa guides in scheduled AI batches instead of scraping government sites.",
+    cardOutcome: "~4,000 visitors per month.",
     seo: [
       "Programmatic SEO: server-rendered guide pages for origin/destination country pairs, plus hub pages and a sitemap.",
       "Pages are revalidated weekly (ISR), so content stays fresh without a rebuild on every request.",
@@ -99,6 +102,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     outcomes: [
       "A live production site with a programmatic guide system built to cover roughly 40,000 origin/destination pairs.",
+      "~4,000 visitors per month.",
     ],
     whyItMatters:
       "A full product, shipped and operated by one engineer: SEO at scale, an AI content pipeline, payments, email and analytics. It's the same loop I run for clients: scope it, build it, ship it, then tune it.",
@@ -151,10 +155,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Only queue offline the writes that are safe to replay (edits and collection changes on rows the user owns). Anything gated by a server-side quota check, like AI parsing, shows \"you're offline\" instead of queueing.",
     ],
     outcomes: [
-      "A production-hardened web app with chat bots and subscription billing, built on shared business logic that the in-development mobile app reuses.",
+      "A web app with chat bots and subscription billing, built on shared business logic that the in-development mobile app reuses.",
     ],
     whyItMatters:
-      "A multi-platform SaaS with real money flowing through it: auth, billing, AI, webhooks, offline sync and an API. This is what 'give me the problem and I'll ship the thing' looks like.",
+      "A multi-platform SaaS with the hard parts built: auth, billing, AI, webhooks, offline sync and an API. This is what 'give me the problem and I'll ship the thing' looks like.",
   },
   {
     slug: "compete",
@@ -246,6 +250,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     outcomes: [
       "The site is live on Next.js with structured data, a sitemap, robots and OG images in place.",
+      "Page load time (LCP) dropped from about 7 seconds to about 700 ms after the Next.js migration.",
       "TODO: add measured results (rankings, traffic or Core Web Vitals) here only if they can be backed up.",
     ],
     whyItMatters:
@@ -276,7 +281,7 @@ export const CLIENT_WORK: ClientWork[] = [
       "Migrated it to Next.js and ran an SEO overhaul: structured data, sitemap, robots, og:image and Core Web Vitals work.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "SEO"],
     outcome:
-      "Live on Next.js with structured data, sitemap, robots and OG images in place.",
+      "Live on Next.js with structured data, sitemap, robots and OG images in place. Page load time (LCP) dropped from about 7 seconds to about 700 ms after the Next.js migration.",
     liveUrl: "https://technomanagers.in",
     caseStudy: "/case-studies/technomanagers-nextjs-migration",
   },
@@ -287,7 +292,7 @@ export const CLIENT_WORK: ClientWork[] = [
     whatIDid:
       "Architected the entire frontend (React Native and React web) and worked directly with the founder.",
     tech: ["React Native", "React", "Node.js"],
-    outcome: "Live in Pune.",
+    outcome: "Live in Pune, 1,000+ bookings to date.",
     liveUrl: "https://www.houseof30ml.in/",
   },
   {

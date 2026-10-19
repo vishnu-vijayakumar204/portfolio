@@ -18,7 +18,7 @@ export default function Projects() {
           </h2>
           <p className="text-lg text-muted-foreground">
             I don&apos;t just code tickets. I can take a product from idea to production. These three I
-            built and shipped myself, under Deviza Labs.
+            built myself, under Deviza Labs.
           </p>
         </div>
 
@@ -61,6 +61,12 @@ export default function Projects() {
                   <div>
                     <p className={LABEL}>Key decision</p>
                     <p className="text-muted-foreground">{p.cardDecision}</p>
+                  </div>
+                )}
+                {p.cardOutcome && (
+                  <div>
+                    <p className={LABEL}>Outcome</p>
+                    <p className="text-muted-foreground">{p.cardOutcome}</p>
                   </div>
                 )}
               </div>
